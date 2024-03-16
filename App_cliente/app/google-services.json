@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "207123066809",
+    "project_id": "day-express-2c811",
+    "storage_bucket": "day-express-2c811.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:207123066809:android:02920666fd902eb0ab1068",
+        "android_client_info": {
+          "package_name": "com.appcliente"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "207123066809-lf8emgknefeb1b8ncanccrrs7kdddo43.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQYg2whkGT7GhRixlgWZd9piZVjKRJ0Vc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "207123066809-lf8emgknefeb1b8ncanccrrs7kdddo43.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

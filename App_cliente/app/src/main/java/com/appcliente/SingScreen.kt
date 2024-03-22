@@ -1,6 +1,7 @@
 package com.appcliente
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
@@ -19,6 +20,7 @@ class SingScreen : AppCompatActivity() {
         enableEdgeToEdge()
         //setContentView(R.layout.activity_sing_screen)
         setContentView(binding.root)
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
         binding.BtnCrearCuenta.setOnClickListener {
 //            val intent = Intent(this, LocationPhoneScreen::class.java)
 //            startActivity(intent)

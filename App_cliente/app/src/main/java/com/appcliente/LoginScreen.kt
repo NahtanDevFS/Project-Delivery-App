@@ -2,6 +2,7 @@ package com.appcliente
 
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
@@ -27,6 +28,7 @@ class LoginScreen : AppCompatActivity() {
         enableEdgeToEdge()
         //setContentView(R.layout.activity_login_screen)
         setContentView(binding.root)
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
         binding.loginButton.setOnClickListener {
 //            val intent = Intent(this, MainActivity::class.java)
 //            startActivity(intent)
@@ -40,6 +42,7 @@ class LoginScreen : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
         setup()
         session()
     }

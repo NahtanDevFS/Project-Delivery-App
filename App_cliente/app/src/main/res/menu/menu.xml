@@ -2,13 +2,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:title="Inicio"
+        android:id="@+id/homeFragment"
         android:icon="@drawable/home24x24"/>
+
     <item android:title="Carrito"
+        android:id="@+id/cartFragment"
         android:icon="@drawable/cart24x24"/>
+
     <item android:title="Buscar"
+        android:id="@+id/searchFragment"
         android:icon="@drawable/search24x24"/>
+
     <item android:title="Historial"
+        android:id="@+id/historyFragment"
         android:icon="@drawable/history24x24"/>
+
     <item android:title="Perfil"
+        android:id="@+id/profileFragment"
         android:icon="@drawable/user24x24"/>
 </menu>

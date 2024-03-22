@@ -1,5 +1,6 @@
 package com.appcliente
 
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import androidx.activity.enableEdgeToEdge
@@ -22,6 +23,7 @@ class LocationPhoneScreen : AppCompatActivity() {
         enableEdgeToEdge()
 //        setContentView(R.layout.activity_location_phone_screen)
         setContentView(binding.root)
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         val locationList = arrayOf("Cabañas", "Estanzuela", "Gualan", "Huité", "La Unión", "Río Hondo", "San Diego", "San Jorge", "Teculután", "Usumatlán", "Zacapa")
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, locationList)
         val autoCompleteTextView = binding.ListOfLocation

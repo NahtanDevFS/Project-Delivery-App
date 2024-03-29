@@ -7,7 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.appcliente.databinding.ActivityLocationPhoneScreenBinding
+import com.appcliente.databinding.ActivityLocationScreenBinding
 
 enum class ProviderType {
     BASIC,
@@ -15,8 +15,8 @@ enum class ProviderType {
 }
 
 class LocationPhoneScreen : AppCompatActivity() {
-    private val binding: ActivityLocationPhoneScreenBinding by lazy {
-        ActivityLocationPhoneScreenBinding.inflate(layoutInflater)
+    private val binding: ActivityLocationScreenBinding by lazy {
+        ActivityLocationScreenBinding.inflate(layoutInflater)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

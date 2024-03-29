@@ -13,6 +13,12 @@
         android:theme="@style/Theme.AppCliente"
         tools:targetApi="31">
         <activity
+            android:name=".DetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PayOutActivity"
+            android:exported="false" />
+        <activity
             android:name=".LocationPhoneScreen"
             android:exported="false" />
         <activity
@@ -32,7 +38,8 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan" />
     </application>
 
 </manifest>

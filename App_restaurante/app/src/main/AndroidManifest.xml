@@ -13,6 +13,33 @@
         android:theme="@style/Theme.AppRestaurante"
         tools:targetApi="31">
         <activity
+            android:name=".OrdenesPendientesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CrearUsuarioActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AdminProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".OutForDeliveryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AllItemActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddMenuActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SignActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Splash_Screen"
+            android:exported="true" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -21,6 +48,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

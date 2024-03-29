@@ -32,7 +32,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
     <EditText
-        android:id="@+id/TxtNombre"
+        android:id="@+id/userName"
         android:layout_width="325dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -54,7 +54,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
-        android:id="@+id/TxtCorreo"
+        android:id="@+id/EmailAddress"
         android:layout_width="325dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -71,12 +71,12 @@
         android:paddingBottom="10dp"
         android:textColor="#FFFFFF"
         android:textColorHint="#73FFFFFF"
-        app:layout_constraintEnd_toEndOf="@+id/TxtNombre"
-        app:layout_constraintStart_toStartOf="@+id/TxtNombre"
-        app:layout_constraintTop_toBottomOf="@+id/TxtNombre" />
+        app:layout_constraintEnd_toEndOf="@+id/userName"
+        app:layout_constraintStart_toStartOf="@+id/userName"
+        app:layout_constraintTop_toBottomOf="@+id/userName" />
 
     <EditText
-        android:id="@+id/TxtClave"
+        android:id="@+id/password"
         android:layout_width="325dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -93,9 +93,9 @@
         android:paddingBottom="10dp"
         android:textColor="#FFFFFF"
         android:textColorHint="#73FFFFFF"
-        app:layout_constraintEnd_toEndOf="@+id/TxtCorreo"
-        app:layout_constraintStart_toStartOf="@+id/TxtCorreo"
-        app:layout_constraintTop_toBottomOf="@+id/TxtCorreo" />
+        app:layout_constraintEnd_toEndOf="@+id/EmailAddress"
+        app:layout_constraintStart_toStartOf="@+id/EmailAddress"
+        app:layout_constraintTop_toBottomOf="@+id/EmailAddress" />
 
     <TextView
         android:id="@+id/textView6"
@@ -107,12 +107,12 @@
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/TxtClave"
-        app:layout_constraintStart_toStartOf="@+id/TxtClave"
-        app:layout_constraintTop_toBottomOf="@+id/TxtClave" />
+        app:layout_constraintEnd_toEndOf="@+id/password"
+        app:layout_constraintStart_toStartOf="@+id/password"
+        app:layout_constraintTop_toBottomOf="@+id/password" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button4"
+        android:id="@+id/googleButton"
         android:layout_width="152dp"
         android:layout_height="60dp"
         android:layout_marginStart="24dp"
@@ -126,7 +126,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button5"
+        android:id="@+id/facebookButton"
         android:layout_width="152dp"
         android:layout_height="60dp"
         android:layout_marginTop="16dp"
@@ -140,7 +140,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/BtnCrearCuenta"
+        android:id="@+id/CreateAccoutButton"
         android:layout_width="152dp"
         android:layout_height="60dp"
         android:layout_marginTop="24dp"
@@ -149,7 +149,7 @@
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button4" />
+        app:layout_constraintTop_toBottomOf="@+id/googleButton" />
 
     <TextView
         android:id="@+id/TxtYaTengoCuenta"
@@ -160,7 +160,7 @@
         android:text="¿Ya tienes una cuenta?"
         android:textColor="@color/text_color"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@+id/BtnCrearCuenta"
-        app:layout_constraintStart_toStartOf="@+id/BtnCrearCuenta"
-        app:layout_constraintTop_toBottomOf="@+id/BtnCrearCuenta" />
+        app:layout_constraintEnd_toEndOf="@+id/CreateAccoutButton"
+        app:layout_constraintStart_toStartOf="@+id/CreateAccoutButton"
+        app:layout_constraintTop_toBottomOf="@+id/CreateAccoutButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>

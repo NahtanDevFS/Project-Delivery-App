@@ -3,27 +3,54 @@ package com.appcliente
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.appcliente.databinding.ActivitySingScreenBinding
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.database
 
 class SingScreen : AppCompatActivity() {
     private val binding: ActivitySingScreenBinding by lazy {
         ActivitySingScreenBinding.inflate(layoutInflater)
     }
+    private lateinit var email: String
+    private lateinit var password: String
+    private lateinit var username: String
+    private lateinit var auth: FirebaseAuth
+    private lateinit var database: DatabaseReference
+    private lateinit var googleSignInClient: GoogleSignInClient
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        //setContentView(R.layout.activity_sing_screen)
+
         setContentView(binding.root)
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
-        binding.BtnCrearCuenta.setOnClickListener {
-//            val intent = Intent(this, LocationPhoneScreen::class.java)
-//            startActivity(intent)
+
+        //Inicializar firebase autentication
+        auth = Firebase.auth
+
+        //Inicializar Firebase Database
+        database = Firebase.database.reference
+
+        binding.CreateAccoutButton.setOnClickListener {
+            username = binding.userName.text.toString()
+            email = binding.EmailAddress.text.toString().trim()
+            password = binding.password.text.toString().trim()
+
+            if(username.isBlank() || email.isEmpty() || password.isBlank()){
+                Toast.makeText(this, "Debe llenar todos los campos", Toast.LENGTH_SHORT).show()
+            } else {
+                createAccout(email, password)
+            }
+
         }
         binding.TxtYaTengoCuenta.setOnClickListener {
             val intent = Intent(this, LoginScreen::class.java)
@@ -36,13 +63,18 @@ class SingScreen : AppCompatActivity() {
         }
         setup()
     }
+
+    private fun createAccout(email: String, password: String) {
+        auth.createUserWithEmailAndPassword(email, password)
+    }
+
     private fun setup(){
         title = "Autenticacion"
 
-        binding.BtnCrearCuenta.setOnClickListener {
-            if (binding.TxtCorreo.text.isNotEmpty() && binding.TxtClave.text.isNotEmpty() && binding.TxtNombre.text.isNotEmpty()) {
-                FirebaseAuth.getInstance().createUserWithEmailAndPassword(binding.TxtCorreo.text.toString(),
-                    binding.TxtClave.text.toString()).addOnCompleteListener {
+        binding.CreateAccoutButton.setOnClickListener {
+            if (binding.EmailAddress.text.isNotEmpty() && binding.password.text.isNotEmpty() && binding.userName.text.isNotEmpty()) {
+                FirebaseAuth.getInstance().createUserWithEmailAndPassword(binding.EmailAddress.text.toString(),
+                    binding.password.text.toString()).addOnCompleteListener {
                         if(it.isSuccessful){
                             showLocation(it.result?.user?.email ?: "", ProviderType.BASIC)
                         } else {

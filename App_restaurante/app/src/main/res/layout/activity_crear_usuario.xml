@@ -17,9 +17,9 @@
         android:background="@android:color/transparent"
         android:scaleType="centerCrop"
         android:src="@drawable/left_arrow24x24"
+        android:tint="@color/textColor"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/textColor" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <ImageView
@@ -90,7 +90,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
-        android:id="@+id/passwordUser"
+        android:id="@+id/password"
         android:layout_width="325dp"
         android:layout_height="57dp"
         android:layout_marginTop="32dp"
@@ -118,5 +118,5 @@
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordUser" />
+        app:layout_constraintTop_toBottomOf="@+id/password" />
 </androidx.constraintlayout.widget.ConstraintLayout>

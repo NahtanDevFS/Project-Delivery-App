@@ -5,24 +5,30 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.apprestaurante.databinding.ItemItemBinding
 
-class AddItemAdapter(private val MenuItemName:ArrayList<String>, private val MenuItemPrice:ArrayList<String>, private val MenuItemImage:ArrayList<Int>) : RecyclerView.Adapter<AddItemAdapter.AddItemViewHold>(){
+class AddItemAdapter(private val MenuItemName:ArrayList<String>, private val MenuItemPrice:ArrayList<String>, private val MenuItemImage:ArrayList<Int>) : RecyclerView.Adapter<AddItemAdapter.AddItemViewHolder>(){
+
     private  val itemQuantities = IntArray(MenuItemName.size){1}
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AddItemViewHold {
-        val binding = ItemItemBinding.inflate(LayoutInflater.from(parent.context),parent, false)
-        return AddItemViewHold(binding)
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AddItemViewHolder {
+        val binding = ItemItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return AddItemViewHolder(binding)
     }
-    override fun onBindViewHolder(holder: AddItemViewHold, position: Int) {
+
+    override fun onBindViewHolder(holder: AddItemViewHolder, position: Int) {
         holder.bind(position)
     }
+
     override fun getItemCount(): Int = MenuItemName.size
-    inner class AddItemViewHold(private val binding: ItemItemBinding) :RecyclerView.ViewHolder(binding.root){
+
+    inner class AddItemViewHolder(private val binding: ItemItemBinding) :RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int) {
             binding.apply {
                 val quantity = itemQuantities[position]
-                nombreComidaTextView.text=MenuItemName[position]
-                precioTextView.text=MenuItemPrice[position]
+                nombreComidaTextView.text = MenuItemName[position]
+                precioTextView.text = MenuItemPrice[position]
                 imagenComidaView.setImageResource(MenuItemImage[position])
                 quantityTextView.text = quantity.toString()
+
                 minusButton.setOnClickListener{
                     decreaseQuantity(position)
                 }

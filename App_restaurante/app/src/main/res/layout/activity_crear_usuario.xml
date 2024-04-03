@@ -10,13 +10,14 @@
 
     <ImageButton
         android:id="@+id/backButton"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:background="@android:color/transparent"
         android:scaleType="centerCrop"
-        android:src="@drawable/flechaizquierda"
+        android:src="@drawable/left_arrow24x24"
+        android:tint="@color/textColor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -65,6 +66,7 @@
         android:textColor="#EAEAEA"
         android:textColorHighlight="#9C27B0"
         android:textColorHint="#8F8F8F"
+        app:layout_constraintEnd_toEndOf="@+id/nombre"
         app:layout_constraintStart_toStartOf="@+id/nombre"
         app:layout_constraintTop_toBottomOf="@+id/nombre" />
 

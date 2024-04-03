@@ -26,7 +26,7 @@ binding.backButton.setOnClickListener{
         )
         val moneyStatus = arrayListOf(
             "recibido",
-            "No Recibido",
+            "noRecibido",
             "Pendiente",
         )
         val adapter= DeliveryAdapter(customerName,moneyStatus)

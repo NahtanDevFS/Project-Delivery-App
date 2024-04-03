@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddMenuActivity">
+    tools:context=".AddItemActivity">
 
     <ScrollView
         android:layout_width="0dp"
@@ -39,161 +39,172 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/abeezee"
-            android:text="Añadir Menú"
+            android:text="Añadir Platillo"
             android:textColor="@color/textColor"
-            android:textSize="40sp"
+            android:textSize="34sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/backButton"
             app:layout_constraintTop_toTopOf="@+id/backButton" />
 
         <EditText
-            android:id="@+id/nombreComida"
+            android:id="@+id/foodName"
             android:layout_width="0dp"
             android:layout_height="57dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:background="@drawable/edittexto"
             android:elevation="5dp"
-            android:fontFamily="@font/abeezee"
+            android:fontFamily="sans-serif-medium"
             android:hint="Ingrese Nombre de Comida"
             android:inputType="text"
             android:outlineSpotShadowColor="@color/textColor"
             android:paddingLeft="15dp"
+            android:textColor="@color/white"
+            android:textColorHint="#73FFFFFF"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
         <EditText
-            android:id="@+id/ingresarPrecio"
+            android:id="@+id/foodPrice"
             android:layout_width="0dp"
             android:layout_height="57dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/edittexto"
             android:elevation="15dp"
-            android:fontFamily="@font/abeezee"
+            android:fontFamily="sans-serif-medium"
             android:hint="Ingrese Precio"
             android:inputType="text"
             android:outlineSpotShadowColor="@color/textColor"
             android:paddingLeft="15dp"
+            android:textColor="@color/white"
+            android:textColorHint="#73FFFFFF"
             android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="@+id/nombreComida"
-            app:layout_constraintStart_toStartOf="@+id/nombreComida"
-            app:layout_constraintTop_toBottomOf="@+id/nombreComida" />
+            app:layout_constraintEnd_toEndOf="@+id/foodName"
+            app:layout_constraintStart_toStartOf="@+id/foodName"
+            app:layout_constraintTop_toBottomOf="@+id/foodName" />
 
         <TextView
-            android:id="@+id/seleccionarimagen"
+            android:id="@+id/selectImage"
             android:layout_width="0dp"
             android:layout_height="57dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/edittexto"
             android:drawableRight="@drawable/agregar"
             android:elevation="15dp"
-            android:fontFamily="@font/abeezee"
+            android:fontFamily="sans-serif-medium"
             android:gravity="center_vertical"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:text="Seleccionar Imagen"
             android:textColor="@color/textColor"
-            app:layout_constraintEnd_toEndOf="@+id/ingresarPrecio"
-            app:layout_constraintStart_toStartOf="@+id/ingresarPrecio"
-            app:layout_constraintTop_toBottomOf="@+id/ingresarPrecio" />
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/foodPrice"
+            app:layout_constraintStart_toStartOf="@+id/foodPrice"
+            app:layout_constraintTop_toBottomOf="@+id/foodPrice" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             app:cardCornerRadius="15dp"
-            app:layout_constraintEnd_toEndOf="@+id/seleccionarimagen"
-            app:layout_constraintStart_toStartOf="@+id/seleccionarimagen"
-            app:layout_constraintTop_toBottomOf="@+id/seleccionarimagen">
+            app:layout_constraintEnd_toEndOf="@+id/selectImage"
+            app:layout_constraintStart_toStartOf="@+id/selectImage"
+            app:layout_constraintTop_toBottomOf="@+id/selectImage">
 
             <ImageView
-                android:id="@+id/imagenSeleccionada"
-                android:layout_width="175dp"
-                android:layout_height="110dp"
+                android:id="@+id/selectedImage"
+                android:layout_width="120dp"
+                android:layout_height="90dp"
+                android:background="#3C3C3C"
                 android:scaleType="fitCenter"
-                android:src="@drawable/imagen" />
+                android:src="@drawable/add_image256x256" />
         </androidx.cardview.widget.CardView>
 
         <TextView
             android:id="@+id/textView14"
             android:layout_width="match_parent"
-            android:layout_height="47dp"
+            android:layout_height="37dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
-            android:background="@drawable/edittexto"
-            android:fontFamily="@font/abeezee"
+            android:fontFamily="sans-serif-medium"
             android:gravity="center_vertical"
             android:paddingLeft="15dp"
             android:text="Descripción Corta"
             android:textColor="@color/textColor"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/seleccionarimagen"
+            app:layout_constraintStart_toStartOf="@+id/selectImage"
             app:layout_constraintTop_toBottomOf="@+id/cardView3" />
 
-        <TextView
-            android:id="@+id/descripcion"
-            android:layout_width="263dp"
-            android:layout_height="73dp"
+        <EditText
+            android:id="@+id/description"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:background="@drawable/edittexto"
-            android:fontFamily="@font/abeezee"
-            android:text="lorem ipsum dolor sit amet, consectetur adipliscing elit, sed  do eismud tempor incididunt ut labore et dolore magna aliqua. ut enim ad"
+            android:fontFamily="sans-serif"
+            android:hint="Agrega una pequeña descripción"
+            android:padding="3dp"
             android:textColor="@color/textColor"
-            app:layout_constraintEnd_toEndOf="@+id/textView14"
-            app:layout_constraintStart_toStartOf="@+id/textView14"
+            android:textColorHint="#73FFFFFF"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
         <TextView
             android:id="@+id/textView15"
             android:layout_width="match_parent"
-            android:layout_height="47dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_height="37dp"
             android:layout_marginStart="8dp"
-            android:background="@drawable/edittexto"
-            android:fontFamily="@font/abeezee"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="sans-serif-medium"
             android:gravity="center_vertical"
             android:paddingLeft="15dp"
-            android:text="Descripción Corta"
+            android:text="Ingredientes"
             android:textColor="@color/textColor"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/descripcion"
-            app:layout_constraintTop_toBottomOf="@+id/descripcion" />
+            app:layout_constraintStart_toStartOf="@+id/description"
+            app:layout_constraintTop_toBottomOf="@+id/description" />
 
         <EditText
-            android:id="@+id/ingredientes"
-            android:layout_width="200dp"
+            android:id="@+id/ingredient"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:background="@drawable/edittexto"
             android:fontFamily="@font/abeezee"
-            android:text="Ensalada de Fideos\nHamburguesa\nPanqueque\nEmpanadas"
+            android:hint="Agrega los ingredientes del platillo"
+            android:padding="3dp"
             android:textColor="@color/textColor"
+            android:textColorHint="#73FFFFFF"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="@+id/textView15"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/textView15"
             app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/AñadirItemBton"
+            android:id="@+id/addItemButton"
             android:layout_width="157dp"
             android:layout_height="57dp"
+            android:layout_marginBottom="50dp"
             android:background="@drawable/yellowbutton"
             android:fontFamily="@font/abeezee"
-            android:text="Añadir Item"
-            android:layout_marginTop="8dp"
+            android:text="Añadir platillo"
             android:textAllCaps="false"
+            android:textColor="@color/white"
             android:textSize="20sp"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ingredientes" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
 
 

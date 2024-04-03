@@ -2,11 +2,7 @@ package com.apprestaurante
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.apprestaurante.databinding.ActivityMainBinding
 
 enum class ProviderType{
@@ -21,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         binding.addMenu.setOnClickListener{
-            val intent = Intent(this, AddMenuActivity::class.java)
+            val intent = Intent(this, AddItemActivity::class.java)
             startActivity(intent)
         }
         binding.allItemMenu.setOnClickListener{

@@ -1,13 +1,22 @@
 package com.apprestaurante.adapter
 
+import android.content.Context
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.apprestaurante.databinding.ItemItemBinding
+import com.apprestaurante.model.AllMenu
+import com.bumptech.glide.Glide
+import com.google.firebase.database.DatabaseReference
 
-class AddItemAdapter(private val MenuItemName:ArrayList<String>, private val MenuItemPrice:ArrayList<String>, private val MenuItemImage:ArrayList<Int>) : RecyclerView.Adapter<AddItemAdapter.AddItemViewHolder>(){
+class MenuItemAdapter(
+    private val context: Context,
+    private val menuList: ArrayList<AllMenu>,
+    databaseReference: DatabaseReference
+) : RecyclerView.Adapter<MenuItemAdapter.AddItemViewHolder>(){
 
-    private  val itemQuantities = IntArray(MenuItemName.size){1}
+    private  val itemQuantities = IntArray(menuList.size){1}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AddItemViewHolder {
         val binding = ItemItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -18,15 +27,21 @@ class AddItemAdapter(private val MenuItemName:ArrayList<String>, private val Men
         holder.bind(position)
     }
 
-    override fun getItemCount(): Int = MenuItemName.size
+    override fun getItemCount(): Int = menuList.size
 
     inner class AddItemViewHolder(private val binding: ItemItemBinding) :RecyclerView.ViewHolder(binding.root){
         fun bind(position: Int) {
             binding.apply {
                 val quantity = itemQuantities[position]
-                nombreComidaTextView.text = MenuItemName[position]
-                precioTextView.text = MenuItemPrice[position]
-                imagenComidaView.setImageResource(MenuItemImage[position])
+                val menuItem = menuList[position]
+                val uriString = menuItem.foodImage
+                val uri = Uri.parse(uriString)
+
+                nombreComidaTextView.text = menuItem.foodName
+                precioTextView.text = menuItem.foodPrice
+
+                //Librería glide para cargar imágenes
+                Glide.with(context).load(uri).into(imagenComidaView)
                 quantityTextView.text = quantity.toString()
 
                 minusButton.setOnClickListener{
@@ -55,11 +70,11 @@ class AddItemAdapter(private val MenuItemName:ArrayList<String>, private val Men
             }
         }
         private fun deleteQuantity(position: Int) {
-            MenuItemName.removeAt(position)
-            MenuItemPrice.removeAt(position)
-            MenuItemImage.removeAt(position)
+            menuList.removeAt(position)
+            menuList.removeAt(position)
+            menuList.removeAt(position)
             notifyItemRemoved(position)
-            notifyItemRangeChanged(position,MenuItemName.size)
+            notifyItemRangeChanged(position,menuList.size)
         }
     }
 }

@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "207123066809",
+    "firebase_url": "https://day-express-2c811-default-rtdb.firebaseio.com",
     "project_id": "day-express-2c811",
     "storage_bucket": "day-express-2c811.appspot.com"
   },
@@ -51,6 +52,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "207123066809-v8ri9km51os8vj0m8q5v3h52lf35dmse.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.apprepartidor",
+            "certificate_hash": "c437eafd5d6154a922906f4d668fc67e0be02514"
+          }
+        },
+        {
           "client_id": "207123066809-lf8emgknefeb1b8ncanccrrs7kdddo43.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -79,6 +88,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "207123066809-fnecrd0ub1htrtsf0h599f76um4l77e4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.apprestaurante",
+            "certificate_hash": "826b0024f2ae14c1de30a81296b9072ca17922ba"
+          }
+        },
         {
           "client_id": "207123066809-lf8emgknefeb1b8ncanccrrs7kdddo43.apps.googleusercontent.com",
           "client_type": 3

@@ -12,6 +12,7 @@ import com.apprestaurante.databinding.ActivityMainBinding
 enum class ProviderType{
     BASIC,
     GOOGLE
+//Prueba
 }
 class MainActivity : AppCompatActivity() {
     private val binding : ActivityMainBinding by lazy {

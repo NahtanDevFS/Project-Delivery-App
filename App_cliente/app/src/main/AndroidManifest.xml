@@ -13,6 +13,9 @@
         android:theme="@style/Theme.AppCliente"
         tools:targetApi="31">
         <activity
+            android:name=".recentOrderItems"
+            android:exported="false" />
+        <activity
             android:name=".DetailsActivity"
             android:exported="false" />
         <activity

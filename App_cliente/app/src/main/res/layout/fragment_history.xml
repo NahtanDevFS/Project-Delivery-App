@@ -36,6 +36,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView14">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/recentbuyitem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/popular_item_color">
@@ -70,8 +71,8 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-medium"
                     android:text="Q25"
-                    android:textSize="20sp"
                     android:textColor="@color/text_color"
+                    android:textSize="20sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/buyAgainFoodName"
                     app:layout_constraintTop_toBottomOf="@+id/buyAgainFoodName" />

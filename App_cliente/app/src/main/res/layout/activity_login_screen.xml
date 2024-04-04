@@ -33,7 +33,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <EditText
-        android:id="@+id/TxtCorreoLogin"
+        android:id="@+id/emailLogin"
         android:layout_width="325dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -55,7 +55,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <EditText
-        android:id="@+id/TxtClaveLogin"
+        android:id="@+id/passwordLogin"
         android:layout_width="325dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -72,10 +72,10 @@
         android:paddingBottom="10dp"
         android:textColor="#FFFFFF"
         android:textColorHint="#73FFFFFF"
-        app:layout_constraintEnd_toEndOf="@+id/TxtCorreoLogin"
+        app:layout_constraintEnd_toEndOf="@+id/emailLogin"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/TxtCorreoLogin"
-        app:layout_constraintTop_toBottomOf="@+id/TxtCorreoLogin" />
+        app:layout_constraintStart_toStartOf="@+id/emailLogin"
+        app:layout_constraintTop_toBottomOf="@+id/emailLogin" />
 
     <TextView
         android:id="@+id/textView4"
@@ -87,13 +87,13 @@
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/TxtClaveLogin"
+        app:layout_constraintEnd_toEndOf="@+id/passwordLogin"
         app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="@+id/TxtClaveLogin"
-        app:layout_constraintTop_toBottomOf="@+id/TxtClaveLogin" />
+        app:layout_constraintStart_toStartOf="@+id/passwordLogin"
+        app:layout_constraintTop_toBottomOf="@+id/passwordLogin" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/GoogleButton"
+        android:id="@+id/googleButtonLogin"
         android:layout_width="152dp"
         android:layout_height="60dp"
         android:layout_marginStart="24dp"
@@ -108,7 +108,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/FacebookButton"
+        android:id="@+id/facebookButtonLogin"
         android:layout_width="152dp"
         android:layout_height="60dp"
         android:layout_marginTop="24dp"
@@ -131,7 +131,7 @@
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/GoogleButton" />
+        app:layout_constraintTop_toBottomOf="@+id/googleButtonLogin" />
 
     <TextView
         android:id="@+id/TxtCrearCuenta"

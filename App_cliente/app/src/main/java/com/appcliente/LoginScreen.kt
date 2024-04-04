@@ -1,146 +1,169 @@
 package com.appcliente
 
-import android.content.Context
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.view.View
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AlertDialog
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.appcliente.databinding.ActivityLoginScreenBinding
+import com.appcliente.model.UserModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.ApiException
+import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.auth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.database
 
 @Suppress("DEPRECATION")
 class LoginScreen : AppCompatActivity() {
+
+    private var userName: String ?= null
+    private lateinit var email: String
+    private lateinit var password: String
+    private lateinit var auth: FirebaseAuth
+    private lateinit var database: DatabaseReference
+    private lateinit var googleSignInClient: GoogleSignInClient
+
     private val binding: ActivityLoginScreenBinding by lazy {
         ActivityLoginScreenBinding.inflate(layoutInflater)
     }
-    private val GOOGLE_SIGN_IN = 100
+//    private val GOOGLE_SIGN_IN = 100
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        //setContentView(R.layout.activity_login_screen)
         setContentView(binding.root)
+
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+
+        val googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken("207123066809-lf8emgknefeb1b8ncanccrrs7kdddo43.apps.googleusercontent.com")
+            .requestEmail().build()
+
+        //inicialización de firebase autentication
+        auth = Firebase.auth
+
+        //inicialización de firebase database
+        database = Firebase.database.reference
+
+        //Inicialización de google autentication
+        googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions)
+
+        //login with email and password
         binding.loginButton.setOnClickListener {
-//            val intent = Intent(this, MainActivity::class.java)
-//            startActivity(intent)
+            //obtener datos de los editTexts
+            email = binding.emailLogin.text.toString().trim()
+            password = binding.passwordLogin.text.toString().trim()
+
+            if(email.isBlank() || password.isBlank()){
+                Toast.makeText(this, "Por favor, llena todos los campos", Toast.LENGTH_SHORT).show()
+            } else {
+                createUser()
+                Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show()
+            }
+
         }
+
         binding.TxtCrearCuenta.setOnClickListener {
             val intent = Intent(this, SingScreen::class.java)
             startActivity(intent)
         }
+
+        //inicio de sesión con google
+        binding.googleButtonLogin.setOnClickListener {
+            val signInIntent = googleSignInClient.signInIntent
+            launcher.launch(signInIntent)
+        }
+        
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
-        setup()
-        session()
+    }
+
+    private val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            result ->
+        if(result.resultCode == Activity.RESULT_OK){
+
+            val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+            if(task.isSuccessful){
+                val account: GoogleSignInAccount? = task.result
+                val credential = GoogleAuthProvider.getCredential(account?.idToken, null)
+                auth.signInWithCredential(credential).addOnCompleteListener {
+                        task ->
+                    if(task.isSuccessful){
+                        Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(this, MainActivity::class.java))
+                        finish()
+                    } else {
+                        Toast.makeText(this, "Inicio de sesión fallido", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        } else{
+            Toast.makeText(this, "Inicio de sesión fallido", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun createUser() {
+        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
+            task ->
+            if(task.isSuccessful){
+                val user = auth.currentUser
+                updateUI(user)
+            } else {
+                auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
+                    task ->
+                    if(task.isSuccessful){
+                        saveUserData()
+                        val user = auth.currentUser
+                        updateUI(user)
+                    } else {
+                        Toast.makeText(this, "Error al iniciar sesión", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun saveUserData() {
+        //obtener datos de los editTexts
+        email = binding.emailLogin.text.toString().trim()
+        password = binding.passwordLogin.text.toString().trim()
+
+        val user = UserModel(userName, email, password)
+        val userId = FirebaseAuth.getInstance().currentUser!!.uid
+
+        //guardar datos en el database
+        database.child("user").child(userId).setValue(user)
+    }
+
+    private fun updateUI(user: FirebaseUser?) {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     override fun onStart() {
         super.onStart()
-        binding.main.visibility = View.VISIBLE
-    }
-
-    private fun session(){
-        val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
-        val email = prefs.getString("email", null)
-        val provider = prefs.getString("provider", null)
-
-        if(email != null && provider != null){
-            binding.main.visibility = View.INVISIBLE
-            showHome(email, ProviderType2.valueOf(provider))
-        }
-    }
-
-    private fun setup(){
-        title = "Autenticacion"
-
-        binding.loginButton.setOnClickListener {
-            if (binding.TxtCorreoLogin.text.isNotEmpty() && binding.TxtClaveLogin.text.isNotEmpty()) {
-                FirebaseAuth.getInstance().signInWithEmailAndPassword(binding.TxtCorreoLogin.text.toString(),
-                    binding.TxtClaveLogin.text.toString()).addOnCompleteListener {
-                    if(it.isSuccessful){
-                        showHome(it.result?.user?.email ?: "", ProviderType2.BASIC)
-                    } else {
-                        showAlert()
-                    }
-                }
-            } else {
-                showLlenarCampos()
-            }
-        }
-        binding.GoogleButton.setOnClickListener {
-            //configuracion de autenticacion con Google
-            val googleConf =
-                GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken("207123066809-lf8emgknefeb1b8ncanccrrs7kdddo43.apps.googleusercontent.com")
-                .requestEmail()
-                    .build()
-            val googleClient = GoogleSignIn.getClient(this, googleConf)
-            googleClient.signOut()
-
-            startActivityForResult(googleClient.signInIntent, GOOGLE_SIGN_IN)
-        }
-    }
-
-    private fun showAlert(){
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Error")
-        builder.setMessage("Se ha producido un error al autenticar el usuario")
-        builder.setPositiveButton("Aceptar", null)
-        val dialog: AlertDialog = builder.create()
-        dialog.show()
-    }
-
-    private fun showLlenarCampos(){
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Error")
-        builder.setMessage("Debe llenar todos los campos")
-        builder.setPositiveButton("Aceptar", null)
-        val dialog: AlertDialog = builder.create()
-        dialog.show()
-    }
-
-    private fun showHome(email: String, provider: ProviderType2) {
-        val intent = Intent(this, MainActivity::class.java).apply {
-            putExtra("email", email)
-            putExtra("provider", provider.name)
-        }
-        startActivity(intent)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if(requestCode == GOOGLE_SIGN_IN){
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-
-            try {
-                val account = task.getResult(ApiException::class.java)
-                if(account != null){
-                    val credential = GoogleAuthProvider.getCredential(account.idToken, null)
-
-                    FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener {
-                        if(it.isSuccessful){
-                            showHome(account.email ?: "", ProviderType2.GOOGLE)
-                        } else {
-                            showAlert()
-                        }
-                    }
-                }
-            } catch (e: ApiException) {
-                showAlert()
-            }
+        val currentUser = auth.currentUser
+        if(currentUser != null){
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 }

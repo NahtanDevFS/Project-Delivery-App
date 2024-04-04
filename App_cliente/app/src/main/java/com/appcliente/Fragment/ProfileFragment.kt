@@ -1,60 +1,152 @@
 package com.appcliente.Fragment
 
+import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import com.appcliente.LoginScreen
 import com.appcliente.R
+import com.appcliente.SingScreen
+import com.appcliente.databinding.FragmentProfileBinding
+import com.appcliente.model.UserModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ProfileFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ProfileFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    private lateinit var binding: FragmentProfileBinding
+
+    //instanciar autenticación  y database de firebase
+    private val auth = FirebaseAuth.getInstance()
+    private val database = FirebaseDatabase.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+
+        binding = FragmentProfileBinding.inflate(inflater, container, false)
+
+        binding.apply {
+
+            nameProfile.isEnabled = false
+            emailProfile.isEnabled = false
+            addressProfile.isEnabled = false
+            phoneProfile.isEnabled = false
+            passwordProfile.isEnabled = false
+            nameProfile.setTextColor(Color.parseColor("#808080"))
+            emailProfile.setTextColor(Color.parseColor("#808080"))
+            addressProfile.setTextColor(Color.parseColor("#808080"))
+            phoneProfile.setTextColor(Color.parseColor("#808080"))
+            passwordProfile.setTextColor(Color.parseColor("#808080"))
+
+            binding.editButton.setOnClickListener {
+
+                nameProfile.isEnabled = !nameProfile.isEnabled
+                emailProfile.isEnabled = !emailProfile.isEnabled
+                addressProfile.isEnabled = !addressProfile.isEnabled
+                phoneProfile.isEnabled = !phoneProfile.isEnabled
+                passwordProfile.isEnabled = ! passwordProfile.isEnabled
+
+                if(nameProfile.isEnabled == false){
+                    nameProfile.setTextColor(Color.parseColor("#808080"))
+                    emailProfile.setTextColor(Color.parseColor("#808080"))
+                    addressProfile.setTextColor(Color.parseColor("#808080"))
+                    phoneProfile.setTextColor(Color.parseColor("#808080"))
+                    passwordProfile.setTextColor(Color.parseColor("#808080"))
+                } else{
+                    nameProfile.setTextColor(Color.parseColor("#ffffff"))
+                    emailProfile.setTextColor(Color.parseColor("#ffffff"))
+                    addressProfile.setTextColor(Color.parseColor("#ffffff"))
+                    phoneProfile.setTextColor(Color.parseColor("#ffffff"))
+                    passwordProfile.setTextColor(Color.parseColor("#ffffff"))
+                }
+            }
+        }
+
+        binding.saveInfoButton.setOnClickListener {
+            val name = binding.nameProfile.text.toString()
+            val email = binding.emailProfile.text.toString()
+            val address = binding.addressProfile.text.toString()
+            val phone = binding.phoneProfile.text.toString()
+            val password = binding.passwordProfile.text.toString()
+
+            updateUserData(name, email, address, phone, password)
+
+        }
+
+        binding.logOutButton.setOnClickListener {
+            auth.signOut()
+            val intent = Intent(requireContext(), LoginScreen::class.java)
+            startActivity(intent)
+
+        }
+
+        setUserData()
+
+        return binding.root
+    }
+
+    private fun updateUserData(name: String, email: String, address: String, phone: String, password: String,) {
+
+        val userId = auth.currentUser?.uid
+        if (userId != null){
+            val userReference = database.getReference("user").child(userId)
+
+            val userData = hashMapOf(
+                "name" to name,
+                "address" to address,
+                "email" to email,
+                "phone" to phone,
+                "password" to password,
+                )
+            userReference.setValue(userData).addOnSuccessListener {
+                Toast.makeText(requireContext(), "Perfil actualizado correctamente", Toast.LENGTH_SHORT).show()
+            }
+                .addOnFailureListener {
+                    Toast.makeText(requireContext(), "Error al actualizar el perfil", Toast.LENGTH_SHORT).show()
+                }
+        }
+    }
+
+    private fun setUserData() {
+        val userId = auth.currentUser?.uid
+        if(userId != null){
+            val userReference = database.getReference("user").child(userId)
+
+            userReference.addListenerForSingleValueEvent(object :ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()){
+                        val userProfile = snapshot.getValue(UserModel::class.java)
+                        if(userProfile != null){
+                            binding.nameProfile.setText(userProfile.name)
+                            binding.addressProfile.setText(userProfile.address)
+                            binding.emailProfile.setText(userProfile.email)
+                            binding.phoneProfile.setText(userProfile.phone)
+                            binding.passwordProfile.setText(userProfile.password)
+                        }
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+            })
+        }
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ProfileFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ProfileFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+
     }
 }

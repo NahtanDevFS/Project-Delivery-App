@@ -13,11 +13,19 @@
         android:orientation="vertical"
         android:layout_height="wrap_content">
 
+        <Button
+            android:id="@+id/editButton"
+            android:backgroundTint="@color/text_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="Editar Perfil" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             android:layout_marginRight="10dp"
             android:background="@drawable/profileedittextshape"
             android:elevation="2dp"
@@ -34,6 +42,7 @@
                 android:textColor="@color/white" />
 
             <EditText
+                android:id="@+id/nameProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -41,7 +50,6 @@
                 android:ems="10"
                 android:fontFamily="sans-serif-medium"
                 android:inputType="text"
-                android:text="Jonathan"
                 android:textColor="@color/white"
                 android:textColorHint="#73FFFFFF" />
         </LinearLayout>
@@ -67,6 +75,7 @@
                 android:textColor="@color/white" />
 
             <EditText
+                android:id="@+id/addressProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -76,7 +85,6 @@
                 android:ems="10"
                 android:fontFamily="sans-serif-medium"
                 android:inputType="textMultiLine"
-                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
                 android:textColor="@color/white"
                 android:textColorHint="#73FFFFFF" />
         </LinearLayout>
@@ -102,6 +110,7 @@
                 android:textColor="@color/white" />
 
             <EditText
+                android:id="@+id/emailProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -109,7 +118,39 @@
                 android:ems="10"
                 android:fontFamily="sans-serif-medium"
                 android:inputType="textEmailAddress"
-                android:text="jonathan04franco@gmail.com"
+                android:textColor="@color/white"
+                android:textColorHint="#73FFFFFF" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/profileedittextshape"
+            android:elevation="2dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-medium"
+                android:text="Teléfono"
+                android:textColor="@color/white" />
+
+            <EditText
+                android:id="@+id/phoneProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:ems="10"
+                android:fontFamily="sans-serif-medium"
+                android:inputType="phone"
                 android:textColor="@color/white"
                 android:textColorHint="#73FFFFFF" />
         </LinearLayout>
@@ -132,24 +173,25 @@
                 android:layout_marginLeft="8dp"
                 android:layout_weight="1"
                 android:fontFamily="sans-serif-medium"
-                android:text="Teléfono"
+                android:text="Clave"
                 android:textColor="@color/white" />
 
             <EditText
+                android:id="@+id/passwordProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:ems="10"
                 android:fontFamily="sans-serif-medium"
-                android:inputType="phone"
-                android:text="123456789"
+                android:inputType="textVisiblePassword"
                 android:textColor="@color/white"
                 android:textColorHint="#73FFFFFF" />
         </LinearLayout>
+
     </LinearLayout>
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button2"
+            android:id="@+id/saveInfoButton"
             android:background="@drawable/proceedbuttonshape"
             android:textColor="@color/text_color"
             android:fontFamily="sans-serif-medium"
@@ -158,9 +200,26 @@
             android:layout_marginRight="8dp"
             android:layout_marginLeft="8dp"
             android:layout_width="match_parent"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="80dp"
             android:textAllCaps="false"
-            android:layout_height="56dp"
+            android:layout_height="40dp"
             android:layout_gravity="bottom"
             android:text="Guardar información" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/logOutButton"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/proceedbuttonshape"
+        android:backgroundTint="#ff5454"
+        android:elevation="5dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Cerrar sesión"
+        android:textAllCaps="false"
+        android:textColor="@color/text_color"
+        android:textSize="20sp" />
 </FrameLayout>

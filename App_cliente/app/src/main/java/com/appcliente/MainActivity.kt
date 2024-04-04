@@ -12,11 +12,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.appcliente.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-enum class ProviderType2 {
-    BASIC,
-    GOOGLE
-}
-
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,21 +30,22 @@ class MainActivity : AppCompatActivity() {
         var NavController = findNavController(R.id.fragmentContainerView)
         var bottomnav = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         bottomnav.setupWithNavController(NavController)
+
         binding.notificationButton.setOnClickListener {
             val bottomSheetDialog = NotificationBottomFragment()
             bottomSheetDialog.show(supportFragmentManager, "Test")
         }
 
 
-        val bundle = intent.extras
-        val email = bundle?.getString("email")
-        val provider = bundle?.getString("provider")
-
-        val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
-        prefs.putString("email", email)
-        prefs.putString("provider", provider)
-        prefs.apply()
-        //borra las preferencias guardadas del usuario
+//        val bundle = intent.extras
+//        val email = bundle?.getString("email")
+//        val provider = bundle?.getString("provider")
+//
+//        val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
+//        prefs.putString("email", email)
+//        prefs.putString("provider", provider)
+//        prefs.apply()
+//        //borra las preferencias guardadas del usuario
 //        prefs.clear()
 //        prefs.apply()
     }

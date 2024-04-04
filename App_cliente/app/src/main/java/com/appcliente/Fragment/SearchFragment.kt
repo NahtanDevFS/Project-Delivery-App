@@ -7,57 +7,79 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.appcliente.R
 import com.appcliente.adapter.MenuAdapter
 import com.appcliente.databinding.FragmentSearchBinding
+import com.appcliente.model.MenuItem
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class SearchFragment : Fragment() {
     private lateinit var binding: FragmentSearchBinding
     private lateinit var adapter : MenuAdapter
+    private lateinit var database: FirebaseDatabase
+    private val originalMenuItems = mutableListOf<MenuItem>()
 
-    private val originalMenuFoodName = listOf("Pie de frutas", "Ensalada", "Helado", "Sopa", "pizza", "hamburguesa", "Ensalada", "Helado", "Sopa", "pizza", "hamburguesa")
-    private val originalMenuItemPrice = listOf("Q35", "Q25", "Q60", "Q30", "Q50", "Q45", "Q25", "Q60", "Q30", "Q50", "Q45")
-    private val originalMenuImage = listOf(R.drawable.menu1, R.drawable.menu2, R.drawable.menu3, R.drawable.menu4, R.drawable.menu5, R.drawable.menu6, R.drawable.menu2, R.drawable.menu3, R.drawable.menu4, R.drawable.menu5, R.drawable.menu6)
-//    val adapter = MenuAdapter(ArrayList(originalMenuFoodName), ArrayList(originalMenuItemPrice), ArrayList(originalMenuImage))
-//    binding.menuRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-//    binding.menuRecyclerView.adapter = adapter
+//    private val filteredMenuFoodName = mutableListOf<String>()
+//    private val filteredMenuItemPrice = mutableListOf<String>()
+//    private val filteredMenuImage = mutableListOf<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
     }
 
-    private val filteredMenuFoodName = mutableListOf<String>()
-    private val filteredMenuItemPrice = mutableListOf<String>()
-    private val filteredMenuImage = mutableListOf<Int>()
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentSearchBinding.inflate(inflater, container, false)
-        adapter = MenuAdapter(filteredMenuFoodName, filteredMenuItemPrice, filteredMenuImage, requireContext())
-        binding.menuRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.menuRecyclerView.adapter = adapter
+
+        //recuperar platillo del database
+        retrieveMenuItem()
 
         //setup for search view
         setupSearchView()
-        //show all menuItems
-        showAllMenu()
 
         return binding.root
     }
 
+    private fun retrieveMenuItem() {
+        //obtener referencia del database
+        database = FirebaseDatabase.getInstance()
+        // referencia al nodo menu
+        val foodReference: DatabaseReference = database.reference.child("menu")
+        foodReference.addListenerForSingleValueEvent(object :ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for(foodSnapshot in snapshot.children){
+
+                    val menuItem = foodSnapshot.getValue(MenuItem::class.java)
+                    menuItem?.let {
+                        originalMenuItems.add(it)
+                    }
+                }
+                showAllMenu()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
+
     private fun showAllMenu() {
-        filteredMenuFoodName.clear()
-        filteredMenuItemPrice.clear()
-        filteredMenuImage.clear()
 
-        filteredMenuFoodName.addAll(originalMenuFoodName)
-        filteredMenuItemPrice.addAll(originalMenuItemPrice)
-        filteredMenuImage.addAll(originalMenuImage)
+        val filteredMenuItem = ArrayList(originalMenuItems)
+        setAdapter(filteredMenuItem)
+    }
 
-        adapter.notifyDataSetChanged()
+    private fun setAdapter(filteredMenuItem: List<MenuItem>) {
+        adapter = MenuAdapter(filteredMenuItem, requireContext() )
+        binding.menuRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        binding.menuRecyclerView.adapter = adapter
     }
 
     private fun setupSearchView() {
@@ -76,17 +98,11 @@ class SearchFragment : Fragment() {
     }
 
     private fun filterMenuItems(query: String) {
-        filteredMenuFoodName.clear()
-        filteredMenuItemPrice.clear()
-        filteredMenuImage.clear()
-        originalMenuFoodName.forEachIndexed { index, foodName ->
-            if(foodName.contains(query, ignoreCase = true)){
-                filteredMenuFoodName.add(foodName)
-                filteredMenuItemPrice.add(originalMenuItemPrice[index])
-                filteredMenuImage.add(originalMenuImage[index])
-            }
+
+        val filteredMenuItems = originalMenuItems.filter {
+            it.foodName?.contains(query, ignoreCase = true) == true
         }
-        adapter.notifyDataSetChanged()
+        setAdapter(filteredMenuItems)
     }
 
     companion object {

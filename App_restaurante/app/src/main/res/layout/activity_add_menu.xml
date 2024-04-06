@@ -76,7 +76,7 @@
             android:elevation="15dp"
             android:fontFamily="sans-serif-medium"
             android:hint="Ingrese Precio"
-            android:inputType="text"
+            android:inputType="number"
             android:outlineSpotShadowColor="@color/textColor"
             android:paddingLeft="15dp"
             android:textColor="@color/white"

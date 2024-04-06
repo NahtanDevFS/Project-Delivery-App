@@ -32,7 +32,7 @@ class CartFragment : Fragment() {
     private lateinit var foodImagesUri: MutableList<String>
     private lateinit var foodIngredients: MutableList<String>
     private lateinit var quantity: MutableList<Int>
-    private  lateinit var cartAdapter: CartAdapter
+    private lateinit var cartAdapter: CartAdapter
     private lateinit var userId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,7 +86,11 @@ class CartFragment : Fragment() {
                     orderItems?.foodImage?.let { foodImage.add(it) }
                     orderItems?.foodIngredient?.let { foodIngredient.add(it) }
                 }
-                orderNow(foodName, foodPrice, foodDescription, foodImage, foodIngredient, foodQuantities)
+                if(foodName.size != 0){
+                    orderNow(foodName, foodPrice, foodDescription, foodImage, foodIngredient, foodQuantities)
+                } else{
+                    Toast.makeText(requireContext(), "El carrito está vacío", Toast.LENGTH_SHORT).show()
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {

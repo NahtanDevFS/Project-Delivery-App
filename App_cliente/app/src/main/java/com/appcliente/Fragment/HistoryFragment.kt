@@ -1,6 +1,7 @@
 package com.appcliente.Fragment
 
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -54,7 +55,17 @@ class HistoryFragment : Fragment() {
             seeItemsRecentBuy()
         }
 
+        binding.receivedButton.setOnClickListener {
+            updateOrderStatus()
+        }
+
         return binding.root
+    }
+
+    private fun updateOrderStatus() {
+        val itemPushKey = listOfOrderItem[0].itemPushKey
+        val completeOrderReference = database.reference.child("CompleteOrder").child(itemPushKey!!)
+        completeOrderReference.child("paymentReceived").setValue(true)
     }
 
     //funcion para poder ver todos los platillos recién comprados
@@ -68,22 +79,23 @@ class HistoryFragment : Fragment() {
 
     private fun retrieveBuyHistory() {
         binding.recentbuyitem.visibility = View.INVISIBLE
-        userId = auth.currentUser?.uid?:""
+        userId = auth.currentUser?.uid ?: ""
 
-        val buyItemReference: DatabaseReference = database.reference.child("user").child(userId).child("BuyHistory")
+        val buyItemReference: DatabaseReference =
+            database.reference.child("user").child(userId).child("BuyHistory")
 
         val sortingQuery = buyItemReference.orderByChild("currentTime")
 
-        sortingQuery.addListenerForSingleValueEvent(object :ValueEventListener{
+        sortingQuery.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                for (buySnapshot in snapshot.children){
+                for (buySnapshot in snapshot.children) {
                     val buyHistoryItem = buySnapshot.getValue(OrderDetails::class.java)
                     buyHistoryItem?.let {
                         listOfOrderItem.add(it)
                     }
                 }
                 listOfOrderItem.reverse()
-                if (listOfOrderItem.isNotEmpty()){
+                if (listOfOrderItem.isNotEmpty()) {
                     //mostrar la orden más reciente
                     setDataInRecentBuyItem()
                     //configurar el recyclerView con los datos de los pedidos anteriores
@@ -104,17 +116,23 @@ class HistoryFragment : Fragment() {
         binding.recentbuyitem.visibility = View.VISIBLE
         val recentOrderItem = listOfOrderItem.firstOrNull()
         recentOrderItem?.let {
-            with(binding){
-                buyAgainFoodName.text = it.foodNames?.firstOrNull()?:""
-                buyAgainFoodPrice.text = it.foodPrices?.firstOrNull()?:""
-                val image = it.foodImages?.firstOrNull()?:""
+            with(binding) {
+                buyAgainFoodName.text = it.foodNames?.firstOrNull() ?: ""
+                buyAgainFoodPrice.text = it.foodPrices?.firstOrNull() ?: ""
+                val image = it.foodImages?.firstOrNull() ?: ""
                 val uri = Uri.parse(image)
                 Glide.with(requireContext()).load(uri).into(buyAgainFoodImage)
 
-                //listOfOrderItem.reverse()
-                if (listOfOrderItem.isNotEmpty()){
-
+                val isOrderIsAccepted = listOfOrderItem[0].orderAccepted
+                if(isOrderIsAccepted){
+                    orderStatus.background.setTint(Color.GREEN)
+                    receivedButton.visibility = View.VISIBLE
                 }
+
+                //listOfOrderItem.reverse()
+//                if (listOfOrderItem.isNotEmpty()) {
+//
+//                }
             }
         }
     }

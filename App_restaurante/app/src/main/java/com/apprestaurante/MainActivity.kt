@@ -1,8 +1,11 @@
 package com.apprestaurante
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.apprestaurante.databinding.ActivityMainBinding
 
 enum class ProviderType{
@@ -37,8 +40,16 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
         binding.ordenPendienteTextView.setOnClickListener{
-            val intent = Intent(this, OrdenesPendientesActivity::class.java)
+            val intent = Intent(this, PendingOrderActivity::class.java)
             startActivity(intent)
         }
+
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+
     }
 }

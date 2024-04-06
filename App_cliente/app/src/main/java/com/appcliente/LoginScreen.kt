@@ -59,6 +59,7 @@ class LoginScreen : AppCompatActivity() {
 
         //Inicialización de google autentication
         googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions)
+        googleSignInClient.revokeAccess()
 
         //login with email and password
         binding.loginButton.setOnClickListener {

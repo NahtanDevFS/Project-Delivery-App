@@ -38,7 +38,7 @@ class MenuItemAdapter(
                 val uri = Uri.parse(uriString)
 
                 nombreComidaTextView.text = menuItem.foodName
-                precioTextView.text = menuItem.foodPrice
+                priceTextView.text = menuItem.foodPrice
 
                 //Librería glide para cargar imágenes
                 Glide.with(context).load(uri).into(imagenComidaView)

@@ -1,12 +1,14 @@
 package com.apprestaurante
 
-import android.R
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.apprestaurante.databinding.ActivitySignBinding
 import com.apprestaurante.model.UserModel
 import com.google.firebase.Firebase
@@ -37,6 +39,12 @@ class SignUpActivity : AppCompatActivity() {
         // Inicialización de firebase database
         database = Firebase.database.reference
 
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
 
         binding.createUserButton.setOnClickListener {
             //obtener texto de los editTexts
@@ -59,8 +67,10 @@ class SignUpActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+
+
         val locationList = arrayOf("Zacapa","Rio Hondo", "Estanzuela", "Gualán", "Teculután","Usumatlán","Cabañas","San Diego", "La Unión", "Huité")
-        val adapter = ArrayAdapter(this, R.layout.simple_list_item_1,locationList)
+        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1,locationList)
         val autoCompleteTextView=binding.listOfLocation
         autoCompleteTextView.setAdapter(adapter)
     }

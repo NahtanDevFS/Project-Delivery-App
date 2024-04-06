@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">App repartidor</string>
+    <string name="prefs_file">com.apprepartidor.PREFERENCE_FILE_KEY</string>
+    <string name="facebook_app_id">406072602052608</string>
+    <string name="fb_login_protocol_scheme">fb406072602052608</string>
+    <string name="facebook_client_token">4b031e9383f2c2d0f415368b831e3f3f</string>
+
 </resources>

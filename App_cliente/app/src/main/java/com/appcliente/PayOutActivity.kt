@@ -31,6 +31,7 @@ class PayOutActivity : AppCompatActivity() {
     private lateinit var foodItemDescription: ArrayList<String>
     private lateinit var foodItemIngredient: ArrayList<String>
     private lateinit var foodItemQuantities: ArrayList<Int>
+    private lateinit var foodItemRestaurant: ArrayList<String>
     private lateinit var databaseReference: DatabaseReference
     private lateinit var userId: String
 
@@ -63,6 +64,7 @@ class PayOutActivity : AppCompatActivity() {
         foodItemDescription = intent.getStringArrayListExtra("foodItemDescription") as ArrayList<String>
         foodItemIngredient = intent.getStringArrayListExtra("foodItemIngredient") as ArrayList<String>
         foodItemQuantities = intent.getIntegerArrayListExtra("foodItemQuantities") as ArrayList<Int>
+        foodItemRestaurant = intent.getStringArrayListExtra("foodItemRestaurant") as ArrayList<String>
 
         totalAmount = calculateTotalAmount().toString() + "Q"
         //binding.totalAmount.isEnabled = false
@@ -89,7 +91,7 @@ class PayOutActivity : AppCompatActivity() {
         userId = auth.currentUser?.uid?:""
         val time = System.currentTimeMillis()
         val itemPushKey = databaseReference.child("OrderDetails").push().key
-        val orderDetails = OrderDetails(userId, name, foodItemName, foodItemPrice, foodItemImage, foodItemQuantities, address, totalAmount, phone, time, itemPushKey, false, false)
+        val orderDetails = OrderDetails(userId, name, foodItemName, foodItemPrice, foodItemImage, foodItemQuantities, foodItemRestaurant, address, totalAmount, phone, time, itemPushKey, false, false)
         val orderReference = databaseReference.child("OrderDetails").child(itemPushKey!!)
 
         orderReference.setValue(orderDetails).addOnSuccessListener {

@@ -21,6 +21,7 @@ class DetailsActivity : AppCompatActivity() {
     private var foodDescription: String ?= null
     private var foodIngredients: String ?= null
     private var foodPrice: String ?= null
+    private var foodRestaurant: String ?= null
     private  lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +41,7 @@ class DetailsActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
         foodName = intent.getStringExtra("MenuItemName")
+        foodRestaurant = intent.getStringExtra("MenuItemRestaurant")
         foodDescription = intent.getStringExtra("MenuItemDescription")
         foodIngredients = intent.getStringExtra("MenuItemIngredients")
         foodPrice = intent.getStringExtra("MenuItemPrice")
@@ -49,6 +51,7 @@ class DetailsActivity : AppCompatActivity() {
             detailFoodName.text = foodName
             descriptionTextView.text = foodDescription
             ingredientsTextView.text = foodIngredients
+            restaurantTextView.text = foodRestaurant
             Glide.with(this@DetailsActivity).load(Uri.parse(foodImage)).into(detailFoodImage)
         }
 
@@ -65,7 +68,7 @@ class DetailsActivity : AppCompatActivity() {
         val userId = auth.currentUser?.uid?:""
 
         // crear un objeto de los items del carrito
-        val cartItem = CartItems(foodName.toString(), foodPrice.toString(), foodDescription.toString(), foodImage.toString(), 1, foodIngredients.toString())
+        val cartItem = CartItems(foodName.toString(), foodPrice.toString(), foodDescription.toString(), foodImage.toString(), 1, foodIngredients.toString(), foodRestaurant.toString())
 
         // guardar los datos del carrito en firebase database
         database.child("user").child(userId).child("CartItems").push().setValue(cartItem).addOnSuccessListener {

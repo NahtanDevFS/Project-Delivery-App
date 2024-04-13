@@ -119,8 +119,15 @@ class SingScreen : AppCompatActivity() {
                 finish()
             } else {
                 Toast.makeText(this, "Error al crear la cuenta", Toast.LENGTH_SHORT).show()
-                Log.d("Account", "createAccout: Fallida", task.exception)
+
+                if(task.exception.toString() == "com.google.firebase.auth.FirebaseAuthUserCollisionException: The email address is already in use by another account."){
+                    Toast.makeText(this, "Ese correo ya está registrado", Toast.LENGTH_SHORT).show()
+                }
+                if(task.exception.toString() == "com.google.firebase.auth.FirebaseAuthWeakPasswordException: The given password is invalid. [ Password should be at least 6 characters ]"){
+                    Toast.makeText(this, "La contraseña debe ser de al menos 6 caracteres", Toast.LENGTH_SHORT).show()
+                }
             }
+
         }
     }
 

@@ -44,6 +44,7 @@ class MenuAdapter( private val menuItems: List<MenuItem>,
             //un intent para abrir el details activity y pasar datos
             val intent = Intent(requireContext, DetailsActivity::class.java).apply {
                 putExtra("MenuItemName", menuItem.foodName)
+                putExtra("MenuItemRestaurant", menuItem.foodRestaurant)
                 putExtra("MenuItemImage", menuItem.foodImage)
                 putExtra("MenuItemDescription", menuItem.foodDescription)
                 putExtra("MenuItemIngredients", menuItem.foodIngredient)

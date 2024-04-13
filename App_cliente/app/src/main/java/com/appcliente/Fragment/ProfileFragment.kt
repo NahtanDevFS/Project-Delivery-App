@@ -102,21 +102,30 @@ class ProfileFragment : Fragment() {
 
         val userId = auth.currentUser?.uid
         if (userId != null){
-            val userReference = database.getReference("user").child(userId)
+            //val userReference = database.getReference("user").child(userId)
 
-            val userData = hashMapOf(
-                "name" to name,
-                "address" to address,
-                "email" to email,
-                "phone" to phone,
-                "password" to password,
-                )
-            userReference.setValue(userData).addOnSuccessListener {
-                Toast.makeText(requireContext(), "Perfil actualizado correctamente", Toast.LENGTH_SHORT).show()
-            }
-                .addOnFailureListener {
-                    Toast.makeText(requireContext(), "Error al actualizar el perfil", Toast.LENGTH_SHORT).show()
-                }
+            database.reference.child("user").child(userId).child("name").setValue(name)
+            database.reference.child("user").child(userId).child("address").setValue(address)
+            database.reference.child("user").child(userId).child("email").setValue(email)
+            database.reference.child("user").child(userId).child("phone").setValue(phone)
+            database.reference.child("user").child(userId).child("password").setValue(password)
+            Toast.makeText(requireContext(), "Perfil actualizado correctamente", Toast.LENGTH_SHORT).show()
+
+//            val userData = hashMapOf(
+//                "name" to name,
+//                "address" to address,
+//                "email" to email,
+//                "phone" to phone,
+//                "password" to password,
+//                )
+//            userReference.setValue(userData).addOnSuccessListener {
+//                Toast.makeText(requireContext(), "Perfil actualizado correctamente", Toast.LENGTH_SHORT).show()
+//            }
+//                .addOnFailureListener {
+//                    Toast.makeText(requireContext(), "Error al actualizar el perfil", Toast.LENGTH_SHORT).show()
+//                }
+        } else {
+            Toast.makeText(requireContext(), "Error al actualizar el perfil", Toast.LENGTH_SHORT).show()
         }
     }
 

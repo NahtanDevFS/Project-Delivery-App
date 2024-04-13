@@ -12,6 +12,7 @@ class OrderDetails(): Serializable {
     var foodImages: MutableList<String>? = null
     var foodPrices: MutableList<String>? = null
     var foodQuantities: MutableList<Int>? = null
+    var foodRestaurant: MutableList<String>? = null
     var address: String? = null
     var totalPrice: String? = null
     var phoneNumber: String? = null
@@ -39,6 +40,7 @@ class OrderDetails(): Serializable {
         foodItemPrice: ArrayList<String>,
         foodItemImage: ArrayList<String>,
         foodItemQuantities: ArrayList<Int>,
+        foodItemRestaurant: ArrayList<String>,
         address: String,
         totalAmount: String,
         phone: String,
@@ -46,13 +48,14 @@ class OrderDetails(): Serializable {
         itemPushKey: String?,
         b: Boolean,
         b1: Boolean
-    ) : this(){
+    ) : this() {
         this.userUid = userId
         this.userName = name
         this.foodNames = foodItemName
         this.foodPrices = foodItemPrice
         this.foodImages = foodItemImage
         this.foodQuantities = foodItemQuantities
+        this.foodRestaurant = foodItemRestaurant
         this.address = address
         this.totalPrice = totalAmount
         this.phoneNumber = phone
@@ -60,10 +63,10 @@ class OrderDetails(): Serializable {
         this.itemPushKey = itemPushKey
         this.orderAccepted = orderAccepted
         this.paymentRecieved = paymentRecieved
-
     }
 
-     fun writeToParcel(parcel: Parcel, flags: Int) {
+
+    fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(userUid)
         parcel.writeString(userName)
         parcel.writeString(address)

@@ -29,6 +29,7 @@ class CartFragment : Fragment() {
     private lateinit var foodNames: MutableList<String>
     private lateinit var foodPrices: MutableList<String>
     private lateinit var foodDescriptions: MutableList<String>
+    private lateinit var foodRestaurant: MutableList<String>
     private lateinit var foodImagesUri: MutableList<String>
     private lateinit var foodIngredients: MutableList<String>
     private lateinit var quantity: MutableList<Int>
@@ -67,6 +68,7 @@ class CartFragment : Fragment() {
         val foodName = mutableListOf<String>()
         val foodPrice = mutableListOf<String>()
         val foodImage = mutableListOf<String>()
+        val foodRestaurant = mutableListOf<String>()
         val foodDescription = mutableListOf<String>()
         val foodIngredient = mutableListOf<String>()
 
@@ -85,9 +87,10 @@ class CartFragment : Fragment() {
                     orderItems?.foodDescription?.let { foodDescription.add(it) }
                     orderItems?.foodImage?.let { foodImage.add(it) }
                     orderItems?.foodIngredient?.let { foodIngredient.add(it) }
+                    orderItems?.foodRestaurant?.let { foodRestaurant.add(it) }
                 }
                 if(foodName.size != 0){
-                    orderNow(foodName, foodPrice, foodDescription, foodImage, foodIngredient, foodQuantities)
+                    orderNow(foodName, foodPrice, foodDescription, foodImage, foodIngredient, foodQuantities, foodRestaurant)
                 } else{
                     Toast.makeText(requireContext(), "El carrito está vacío", Toast.LENGTH_SHORT).show()
                 }
@@ -105,7 +108,8 @@ class CartFragment : Fragment() {
         foodDescription: MutableList<String>,
         foodImage: MutableList<String>,
         foodIngredient: MutableList<String>,
-        foodQuantities: MutableList<Int>
+        foodQuantities: MutableList<Int>,
+        foodRestaurant: MutableList<String>
     ) {
 
         if(isAdded && context != null){
@@ -116,6 +120,7 @@ class CartFragment : Fragment() {
             intent.putExtra("foodItemDescription", foodDescription as ArrayList<String>)
             intent.putExtra("foodItemIngredient", foodIngredient as ArrayList<String>)
             intent.putExtra("foodItemQuantities", foodQuantities as ArrayList<Int>)
+            intent.putExtra("foodItemRestaurant", foodRestaurant as ArrayList<String>)
             startActivity(intent)
         }
     }
@@ -133,6 +138,7 @@ class CartFragment : Fragment() {
         foodDescriptions = mutableListOf()
         foodImagesUri = mutableListOf()
         foodIngredients = mutableListOf()
+        foodRestaurant = mutableListOf()
         quantity = mutableListOf()
 
         //buscar datos del database
@@ -150,13 +156,14 @@ class CartFragment : Fragment() {
                     cartItems?.foodImage?.let { foodImagesUri.add(it) }
                     cartItems?.foodQuantity?.let { quantity.add(it) }
                     cartItems?.foodIngredient?.let { foodIngredients.add(it) }
+                    cartItems?.foodRestaurant?.let { foodRestaurant.add(it) }
                 }
 
                 setAdapter()
             }
 
             private fun setAdapter() {
-                cartAdapter = CartAdapter(requireContext(), foodNames, foodPrices, foodDescriptions, foodImagesUri, quantity, foodIngredients)
+                cartAdapter = CartAdapter(requireContext(), foodNames, foodPrices, foodDescriptions, foodImagesUri, quantity, foodIngredients, foodRestaurant)
                 binding.cartRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
                 binding.cartRecyclerView.adapter = cartAdapter
             }

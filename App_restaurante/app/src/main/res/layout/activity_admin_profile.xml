@@ -7,24 +7,26 @@
     android:layout_height="match_parent"
     android:background="#3C3C3C"
     tools:context=".AdminProfileActivity">
+
     <ImageButton
         android:id="@+id/backButton"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:background="@android:color/transparent"
         android:scaleType="centerCrop"
-        android:src="@drawable/flechaizquierda"
+        android:src="@drawable/left_arrow24x24"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/textColor" />
 
     <TextView
         android:id="@+id/textView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/abeezee"
-        android:text="Administrador de Perfiles"
+        android:text="Perfil de usuario"
         android:textColor="@color/textColor"
         android:textSize="26sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,11 +64,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="15dp"
-        android:outlineSpotShadowColor="@color/textColor"
+        android:layout_marginTop="24dp"
         android:background="@drawable/edittexto"
         android:elevation="2dp"
         android:orientation="horizontal"
+        android:outlineSpotShadowColor="@color/textColor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView12">
 
@@ -93,7 +95,7 @@
             android:inputType="text"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:text="TextView" />
+            android:textColor="@color/white" />
     </LinearLayout>
 
     <LinearLayout
@@ -133,7 +135,7 @@
             android:inputType="textEmailAddress"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:text="TextView@gmail.com" />
+            android:textColor="@color/white" />
     </LinearLayout>
 
     <LinearLayout
@@ -172,7 +174,7 @@
             android:fontFamily="@font/abeezee"
             android:inputType="textMultiLine"
             android:padding="4dp"
-            android:text="TextViewTextViewTextViewTextViewTextViewTextViewTextViewTextViewTextViewTextViewTextViewTextViewTextViewTextViewTextViewTextView" />
+            android:textColor="@color/white" />
     </LinearLayout>
 
     <LinearLayout
@@ -189,7 +191,6 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
         <TextView
-            android:id="@+id/telefono"
             android:layout_width="match_parent"
             android:layout_height="47dp"
             android:layout_weight="3"
@@ -203,6 +204,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
         <EditText
+            android:id="@+id/telefono"
             android:layout_width="match_parent"
             android:layout_height="47dp"
             android:layout_weight="1"
@@ -211,23 +213,23 @@
             android:inputType="phone"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:text="12304567890" />
+            android:textColor="@color/white" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="15dp"
-        android:outlineSpotShadowColor="@color/textColor"
         android:background="@drawable/edittexto"
         android:elevation="2dp"
         android:orientation="horizontal"
+        android:outlineSpotShadowColor="@color/textColor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
 
         <TextView
-            android:id="@+id/contrasena"
             android:layout_width="match_parent"
             android:layout_height="47dp"
             android:layout_weight="3"
@@ -241,6 +243,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
         <EditText
+            android:id="@+id/contrasena"
             android:layout_width="match_parent"
             android:layout_height="47dp"
             android:layout_weight="1"
@@ -249,10 +252,44 @@
             android:inputType="textPassword"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:text="TextView" />
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/edittexto"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout6">
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:paddingStart="15dp"
+            android:text="Restaurante"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/userRestaurant"
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:ems="10"
+            android:inputType="text"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textColor="@color/white" />
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/saveInfoButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
@@ -263,7 +300,7 @@
         android:text="Guardar Información"
         android:textAllCaps="false"
         android:textColor="@color/textColor"
-        android:textSize="15sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

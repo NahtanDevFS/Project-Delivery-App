@@ -47,20 +47,35 @@ class SearchFragment : Fragment() {
     }
 
     private fun retrieveMenuItem() {
-        //obtener referencia del database
-        database = FirebaseDatabase.getInstance()
-        // referencia al nodo menu
-        val foodReference: DatabaseReference = database.reference.child("menu")
-        foodReference.addListenerForSingleValueEvent(object :ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for(foodSnapshot in snapshot.children){
 
-                    val menuItem = foodSnapshot.getValue(MenuItem::class.java)
-                    menuItem?.let {
-                        originalMenuItems.add(it)
-                    }
+        database = FirebaseDatabase.getInstance()
+
+        val userRef: DatabaseReference = database.reference.child("user")
+
+        userRef.addListenerForSingleValueEvent(object :ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for(userSnapshot in snapshot.children){
+                    val userUid = userSnapshot.key.toString()
+                    //obtener una referencia del database
+                    database = FirebaseDatabase.getInstance()
+                    val foodRef: DatabaseReference = database.reference.child("user").child(userUid).child("menu")
+
+                    //recuperar platillos del database
+                    foodRef.addListenerForSingleValueEvent(object :ValueEventListener{
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            for(foodSnapshot in snapshot.children){
+                                val menuItem = foodSnapshot.getValue(MenuItem::class.java)
+                                menuItem?.let { originalMenuItems.add(it) }
+                            }
+                            showAllMenu()
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            TODO("Not yet implemented")
+                        }
+
+                    })
                 }
-                showAllMenu()
             }
 
             override fun onCancelled(error: DatabaseError) {

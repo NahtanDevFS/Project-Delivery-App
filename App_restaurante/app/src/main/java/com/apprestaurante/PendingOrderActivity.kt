@@ -2,12 +2,14 @@ package com.apprestaurante
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.apprestaurante.adapter.PendingOrderAdapter
 import com.apprestaurante.databinding.ActivityOrdenesPendientesBinding
 import com.apprestaurante.model.OrderDetails
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -22,6 +24,9 @@ class PendingOrderActivity : AppCompatActivity(), PendingOrderAdapter.OnItemClic
     private var listOfOrderItem: ArrayList<OrderDetails> = arrayListOf()
     private lateinit var database: FirebaseDatabase
     private lateinit var databaseOrderDetails: DatabaseReference
+    private lateinit var auth: FirebaseAuth
+    private lateinit var adminReference: DatabaseReference
+    private lateinit var databaseOrderRestaurant: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -34,6 +39,10 @@ class PendingOrderActivity : AppCompatActivity(), PendingOrderAdapter.OnItemClic
         //inicializacion de la referencia de la base de datos
         databaseOrderDetails = database.reference.child("OrderDetails")
 
+        auth = FirebaseAuth.getInstance()
+
+        adminReference = database.reference.child("user")
+
         getOrdersDetails()
 
         binding.backButton.setOnClickListener{
@@ -44,14 +53,40 @@ class PendingOrderActivity : AppCompatActivity(), PendingOrderAdapter.OnItemClic
     }
 
     private fun getOrdersDetails() {
+
+        val currentUserUid = auth.currentUser?.uid
+        var restaurant = ""
+        if (currentUserUid != null) {
+            val userReference = adminReference.child(currentUserUid)
+
+            userReference.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        restaurant = snapshot.child("nameOfRestaurant").getValue().toString()
+                        Log.d("TAG1", restaurant)
+                    }
+                }
+                override fun onCancelled(error: DatabaseError) {
+                }
+            })
+        }
+
         //recuperar los detalles de las órdenes de la base de datos de firebase
         databaseOrderDetails.addListenerForSingleValueEvent(object :ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
+                Log.d("TAG2", restaurant)
                 for(orderSnapshot in snapshot.children){
-                    val orderDetails = orderSnapshot.getValue(OrderDetails::class.java)
-                    orderDetails?.let {
-                        listOfOrderItem.add(it)
+
+                    val orderUid = orderSnapshot.key.toString()
+                    var orderRestaurant = snapshot.child(orderUid).child("foodRestaurant").child("0").getValue()
+
+                    if (orderRestaurant == restaurant){
+                        val orderDetails = orderSnapshot.getValue(OrderDetails::class.java)
+                        orderDetails?.let { listOfOrderItem.add(it) }
                     }
+
+                    //databaseOrderRestaurant = database.reference.child("OrderDetails").child(orderUid).child("foodRestaurant").child("0")
+
                 }
                 addDataToListRecyclerView()
             }

@@ -23,6 +23,7 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var nameOfRestaurant : String
     private lateinit var email : String
     private lateinit var password : String
+    private lateinit var address : String
     private lateinit var auth : FirebaseAuth
     private lateinit var database : DatabaseReference
 
@@ -53,7 +54,7 @@ class SignUpActivity : AppCompatActivity() {
             email = binding.emailOrPhone.text.toString().trim()
             password = binding.password.text.toString().trim()
 
-            if(userName.isBlank() || nameOfRestaurant.isBlank() || email.isBlank() || password.isBlank()){
+            if(userName.isBlank() || nameOfRestaurant.isBlank() || email.isBlank() || password.isBlank() || binding.listOfLocation.text.toString().equals("Elegir ubicación")){
                 Toast.makeText(this, "Por favor, llena todos los campos", Toast.LENGTH_SHORT).show()
             } else{
                 createAccount(email, password)
@@ -66,8 +67,6 @@ class SignUpActivity : AppCompatActivity() {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
-
-
 
         val locationList = arrayOf("Zacapa","Rio Hondo", "Estanzuela", "Gualán", "Teculután","Usumatlán","Cabañas","San Diego", "La Unión", "Huité")
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1,locationList)
@@ -85,8 +84,15 @@ class SignUpActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             } else {
-                Toast.makeText(this, "Se produjo un error al crear la cuenta", Toast.LENGTH_SHORT).show()
-                Log.d("Account", "crearCuenta: Fallido", task.exception)
+                Toast.makeText(this, "Error al crear la cuenta", Toast.LENGTH_SHORT).show()
+
+                if(task.exception.toString() == "com.google.firebase.auth.FirebaseAuthUserCollisionException: The email address is already in use by another account."){
+                    Toast.makeText(this, "Ese correo ya está registrado", Toast.LENGTH_SHORT).show()
+                }
+
+                if(task.exception.toString() == "com.google.firebase.auth.FirebaseAuthWeakPasswordException: The given password is invalid. [ Password should be at least 6 characters ]"){
+                    Toast.makeText(this, "La contraseña debe ser de al menos 6 caracteres", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
@@ -98,8 +104,9 @@ class SignUpActivity : AppCompatActivity() {
         nameOfRestaurant = binding.restaurantName.text.toString().trim()
         email = binding.emailOrPhone.text.toString().trim()
         password = binding.password.text.toString().trim()
+        address = binding.listOfLocation.text.toString().trim()
 
-        val user = UserModel(userName, nameOfRestaurant, email, password)
+        val user = UserModel(userName, nameOfRestaurant, email, password, "", address)
         val userId = FirebaseAuth.getInstance().currentUser!!.uid
 
         //guardar la información del usuario en firebase database

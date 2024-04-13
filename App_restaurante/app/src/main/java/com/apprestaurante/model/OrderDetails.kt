@@ -11,6 +11,7 @@ class OrderDetails() :Serializable {
     var foodImages: MutableList<String>? = null
     var foodPrices: MutableList<String>? = null
     var foodQuantities: MutableList<Int>? = null
+    var foodRestaurant: MutableList<String>? = null
     var address: String? = null
     var totalPrice: String? = null
     var phoneNumber: String? = null
@@ -56,4 +57,5 @@ class OrderDetails() :Serializable {
             return arrayOfNulls(size)
         }
     }
+
 }

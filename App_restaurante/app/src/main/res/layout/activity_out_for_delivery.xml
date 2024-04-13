@@ -9,15 +9,16 @@
 
     <ImageButton
         android:id="@+id/backButton"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:background="@android:color/transparent"
         android:scaleType="centerCrop"
-        android:src="@drawable/flechaizquierda"
+        android:src="@drawable/left_arrow24x24"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/textColor" />
 
     <TextView
         android:id="@+id/textView11"

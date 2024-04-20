@@ -71,53 +71,15 @@
                 app:layout_constraintStart_toEndOf="@+id/cardView4" />
 
             <ImageButton
-                android:id="@+id/minusButton"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginEnd="4dp"
-                android:background="@drawable/menos"
-                android:scaleType="centerInside"
-                android:src="@drawable/menos"
-                app:layout_constraintBottom_toBottomOf="@+id/quantityTextView"
-                app:layout_constraintEnd_toStartOf="@+id/quantityTextView"
-                app:layout_constraintTop_toTopOf="@+id/quantityTextView"
-                app:layout_constraintVertical_bias="0.515" />
-
-            <ImageButton
-                android:id="@+id/pluseButton"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginTop="6dp"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/agregar"
-                android:scaleType="centerCrop"
-                android:src="@drawable/agregar"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/quantityTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:text="10"
-                app:layout_constraintBottom_toBottomOf="@+id/pluseButton"
-                app:layout_constraintEnd_toStartOf="@+id/pluseButton"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageButton
                 android:id="@+id/deleteButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="0dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="32dp"
                 android:background="@android:color/transparent"
                 android:src="@drawable/basura"
-                app:layout_constraintEnd_toEndOf="@+id/pluseButton"
-                app:layout_constraintHorizontal_bias="0.526"
-                app:layout_constraintStart_toStartOf="@+id/minusButton"
-                app:layout_constraintTop_toBottomOf="@+id/minusButton" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,11 +21,13 @@ class PendingOrderActivity : AppCompatActivity(), PendingOrderAdapter.OnItemClic
     private var listOfName: MutableList<String> = mutableListOf()
     private var listOfTotalPrice: MutableList<String> = mutableListOf()
     private var listOfImageFirstFoodOrder: MutableList<String> = mutableListOf()
+    private var listOfIsAccepted: MutableList<Boolean> = mutableListOf()
     private var listOfOrderItem: ArrayList<OrderDetails> = arrayListOf()
     private lateinit var database: FirebaseDatabase
     private lateinit var databaseOrderDetails: DatabaseReference
     private lateinit var auth: FirebaseAuth
     private lateinit var adminReference: DatabaseReference
+    public var isOrderAccepted = false
     private lateinit var databaseOrderRestaurant: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,10 +48,20 @@ class PendingOrderActivity : AppCompatActivity(), PendingOrderAdapter.OnItemClic
         getOrdersDetails()
 
         binding.backButton.setOnClickListener{
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
             finish()
         }
 
 
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     private fun getOrdersDetails() {
@@ -63,7 +75,6 @@ class PendingOrderActivity : AppCompatActivity(), PendingOrderAdapter.OnItemClic
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
                         restaurant = snapshot.child("nameOfRestaurant").getValue().toString()
-                        Log.d("TAG1", restaurant)
                     }
                 }
                 override fun onCancelled(error: DatabaseError) {
@@ -74,7 +85,6 @@ class PendingOrderActivity : AppCompatActivity(), PendingOrderAdapter.OnItemClic
         //recuperar los detalles de las órdenes de la base de datos de firebase
         databaseOrderDetails.addListenerForSingleValueEvent(object :ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                Log.d("TAG2", restaurant)
                 for(orderSnapshot in snapshot.children){
 
                     val orderUid = orderSnapshot.key.toString()
@@ -106,13 +116,14 @@ class PendingOrderActivity : AppCompatActivity(), PendingOrderAdapter.OnItemClic
             orderItem.foodImages?.filterNot { it.isEmpty() }?.forEach {
                 listOfImageFirstFoodOrder.add(it)
             }
+            orderItem.orderAccepted?.let { listOfIsAccepted.add(it) }
         }
         setAdapter()
     }
 
     private fun setAdapter() {
         binding.pendingOrderRecyclerView.layoutManager = LinearLayoutManager(this)
-        val adapter = PendingOrderAdapter(this, listOfName, listOfTotalPrice, listOfImageFirstFoodOrder, this)
+        val adapter = PendingOrderAdapter(this, listOfName, listOfTotalPrice, listOfImageFirstFoodOrder, listOfIsAccepted, this)
         binding.pendingOrderRecyclerView.adapter = adapter
     }
 
@@ -130,6 +141,7 @@ class PendingOrderActivity : AppCompatActivity(), PendingOrderAdapter.OnItemClic
             database.reference.child("OrderDetails").child(it)
         }
         clickItemOrderReference?.child("orderAccepted")?.setValue(true)
+
         updateOrderAcceptStatus(position)
     }
 
@@ -147,7 +159,7 @@ class PendingOrderActivity : AppCompatActivity(), PendingOrderAdapter.OnItemClic
         val orderDetailsItemsReference = database.reference.child("OrderDetails").child(dispatchItemPushKey)
         orderDetailsItemsReference.removeValue()
             .addOnSuccessListener {
-                Toast.makeText(this, "La orden ha sido despachada", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "La Orden fue Despachada", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener {
                 Toast.makeText(this, "Error al despachar la orden", Toast.LENGTH_SHORT).show()

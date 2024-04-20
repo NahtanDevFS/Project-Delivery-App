@@ -1,5 +1,6 @@
 package com.apprestaurante
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
@@ -50,6 +51,8 @@ class AddItemActivity : AppCompatActivity() {
             if (!(foodName.isBlank() || foodPrice.isBlank() || foodDescription.isBlank() || foodIngredient.isBlank() || foodRestaurant.isBlank())){
                 uploadData()
                 Toast.makeText(this, "Platillo agregado exitosamente", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
                 finish()
 
             } else {
@@ -63,8 +66,18 @@ class AddItemActivity : AppCompatActivity() {
         }
 
         binding.backButton.setOnClickListener{
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
             finish()
         }
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     private fun uploadData() {

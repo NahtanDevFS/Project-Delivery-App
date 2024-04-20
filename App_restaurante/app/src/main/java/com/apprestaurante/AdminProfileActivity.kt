@@ -1,5 +1,6 @@
 package com.apprestaurante
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.widget.Toast
@@ -35,6 +36,8 @@ class AdminProfileActivity : AppCompatActivity() {
 
 
         binding.backButton.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
             finish()
         }
 
@@ -94,6 +97,14 @@ class AdminProfileActivity : AppCompatActivity() {
 
         retrieveUserData()
 
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     private fun retrieveUserData() {

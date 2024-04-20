@@ -1,5 +1,6 @@
 package com.apprestaurante
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
@@ -57,11 +58,21 @@ class OutForDeliveryActivity : AppCompatActivity() {
         }
 
         binding.backButton.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
             finish()
         }
         // recuperar y mostrar los datos de las órdenes completadas
         retrieveCompleteOrderDetail()
 
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     private fun retrieveCompleteOrderDetail() {

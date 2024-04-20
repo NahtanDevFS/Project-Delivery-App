@@ -90,7 +90,24 @@ class CartFragment : Fragment() {
                     orderItems?.foodRestaurant?.let { foodRestaurant.add(it) }
                 }
                 if(foodName.size != 0){
-                    orderNow(foodName, foodPrice, foodDescription, foodImage, foodIngredient, foodQuantities, foodRestaurant)
+                    val itemsSize = foodRestaurant.size
+                    var different = 0
+                    //verifica que los platillos que el cliente pidan vengan sean del mismo restaurante
+                    if(itemsSize > 1){
+                        for (i in 0 until itemsSize){
+                            if(foodRestaurant[0] != foodRestaurant[i]) {
+                                different += 1
+                            }
+                        }
+                        if (different == 0){
+                            orderNow(foodName, foodPrice, foodDescription, foodImage, foodIngredient, foodQuantities, foodRestaurant)
+                        } else {
+                            Toast.makeText(requireContext(), "Los platillos deben ser del mismo restaurante", Toast.LENGTH_LONG).show()
+                        }
+                    } else{
+                        orderNow(foodName, foodPrice, foodDescription, foodImage, foodIngredient, foodQuantities, foodRestaurant)
+                    }
+
                 } else{
                     Toast.makeText(requireContext(), "El carrito está vacío", Toast.LENGTH_SHORT).show()
                 }

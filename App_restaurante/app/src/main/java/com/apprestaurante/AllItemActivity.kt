@@ -1,5 +1,6 @@
 package com.apprestaurante
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -39,8 +40,18 @@ class AllItemActivity : AppCompatActivity() {
         retrieveMenuItem()
 
         binding.backButton.setOnClickListener{
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
             finish()
         }
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     private fun retrieveMenuItem() {
@@ -83,7 +94,9 @@ class AllItemActivity : AppCompatActivity() {
         val menuItemToDelete = menuItems[position]
         val menuItemKey = menuItemToDelete.key
         val foodMenuReference = database.reference.child("menu").child(menuItemKey!!)
-        foodMenuReference.removeValue().addOnCompleteListener { task ->
+        val foodRef: DatabaseReference = database.reference.child("user").child(userId).child("menu").child(menuItemKey)
+
+        foodRef.removeValue().addOnCompleteListener { task ->
             if (task.isSuccessful){
                 menuItems.removeAt(position)
                 binding.MenuRecyclerView.adapter?.notifyItemRemoved(position)

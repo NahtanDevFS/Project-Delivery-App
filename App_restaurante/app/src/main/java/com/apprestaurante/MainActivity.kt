@@ -17,6 +17,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.getValue
 import java.util.Timer
 import java.util.TimerTask
 
@@ -46,22 +47,27 @@ class MainActivity : AppCompatActivity() {
         binding.addMenu.setOnClickListener {
             val intent = Intent(this, AddItemActivity::class.java)
             startActivity(intent)
+            finish()
         }
         binding.allItemMenu.setOnClickListener {
             val intent = Intent(this, AllItemActivity::class.java)
             startActivity(intent)
+            finish()
         }
         binding.outForDeliveryButton.setOnClickListener {
             val intent = Intent(this, OutForDeliveryActivity::class.java)
             startActivity(intent)
+            finish()
         }
         binding.perfil.setOnClickListener {
             val intent = Intent(this, AdminProfileActivity::class.java)
             startActivity(intent)
+            finish()
         }
         binding.ordenPendienteTextView.setOnClickListener {
             val intent = Intent(this, PendingOrderActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -109,7 +115,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun wholeTimeEarning() {
 
-
         var listOfTotalPay = mutableListOf<Int>()
 
         completedOrderReference = FirebaseDatabase.getInstance().reference.child("CompleteOrder")
@@ -122,12 +127,17 @@ class MainActivity : AppCompatActivity() {
                     var orderRestaurant =
                         snapshot.child(orderUid).child("foodRestaurant").child("0").getValue()
 
+                    var payment = snapshot.child(orderUid).child("paymentReceived").getValue()
+
                     if (orderRestaurant == restaurant) {
-                        var completedOrder = orderSnapshot.getValue(OrderDetails::class.java)
-                        completedOrder?.totalPrice?.replace("Q", "")?.toIntOrNull()
-                            ?.let { i ->
-                                listOfTotalPay.add(i)
-                            }
+                        if(payment == true){
+                            var completedOrder = orderSnapshot.getValue(OrderDetails::class.java)
+                            completedOrder?.totalPrice?.replace("Q", "")?.toIntOrNull()
+                                ?.let { i ->
+                                    listOfTotalPay.add(i)
+                                }
+                        }
+
                     }
                 }
                 binding.wholeTimeEarning.text = "Q" + listOfTotalPay.sum().toString()

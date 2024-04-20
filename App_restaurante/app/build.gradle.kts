@@ -60,4 +60,7 @@ dependencies {
 
     //para Glide
     implementation ("com.github.bumptech.glide:glide:4.16.0")
+
+    //para refrescar la vista
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 }

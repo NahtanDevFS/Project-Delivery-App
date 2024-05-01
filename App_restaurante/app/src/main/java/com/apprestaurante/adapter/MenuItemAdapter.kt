@@ -13,7 +13,8 @@ import com.google.firebase.database.DatabaseReference
 class MenuItemAdapter(
     private val context: Context,
     private val menuList: ArrayList<AllMenu>,
-    databaseReference: DatabaseReference
+    databaseReference: DatabaseReference,
+    private val onDeleteClickListener: (position :Int) -> Unit
 ) : RecyclerView.Adapter<MenuItemAdapter.AddItemViewHolder>(){
 
     private  val itemQuantities = IntArray(menuList.size){1}
@@ -42,33 +43,34 @@ class MenuItemAdapter(
 
                 //Librería glide para cargar imágenes
                 Glide.with(context).load(uri).into(imagenComidaView)
-                quantityTextView.text = quantity.toString()
+//                quantityTextView.text = quantity.toString()
 
-                minusButton.setOnClickListener{
-                    decreaseQuantity(position)
-                }
+//                minusButton.setOnClickListener{
+//                    decreaseQuantity(position)
+//                }
                 deleteButton.setOnClickListener{
-                    deleteQuantity(position)
+                    onDeleteClickListener(position)
+                    //deleteQuantity(position)
                 }
-                pluseButton.setOnClickListener{
-                    increaseQuantity(position)
-                }
+//                pluseButton.setOnClickListener{
+//                    increaseQuantity(position)
+//                }
 
             }
         }
 
-        private fun increaseQuantity(position: Int) {
-           if(itemQuantities[position]<10){
-               itemQuantities[position]++
-               binding.quantityTextView.text=itemQuantities[position].toString()
-           }
-        }
-        private fun decreaseQuantity(position: Int) {
-            if(itemQuantities[position]>1){
-                itemQuantities[position]--
-                binding.quantityTextView.text=itemQuantities[position].toString()
-            }
-        }
+//        private fun increaseQuantity(position: Int) {
+//           if(itemQuantities[position]<10){
+//               itemQuantities[position]++
+//               binding.quantityTextView.text=itemQuantities[position].toString()
+//           }
+//        }
+//        private fun decreaseQuantity(position: Int) {
+//            if(itemQuantities[position]>1){
+//                itemQuantities[position]--
+//                binding.quantityTextView.text=itemQuantities[position].toString()
+//            }
+//        }
         private fun deleteQuantity(position: Int) {
             menuList.removeAt(position)
             menuList.removeAt(position)

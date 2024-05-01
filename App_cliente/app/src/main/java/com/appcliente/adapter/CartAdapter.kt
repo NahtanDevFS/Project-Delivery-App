@@ -23,7 +23,8 @@ class CartAdapter (
     private var cartDescriptions: MutableList<String>,
     private var cartImages:MutableList<String>,
     private val cartQuantity: MutableList<Int>,
-    private var cartIngredient: MutableList<String>
+    private var cartIngredient: MutableList<String>,
+    private var cartRestaurant: MutableList<String>,
 ) : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
 
     //Instanciar autenticacion de firebase
@@ -128,6 +129,7 @@ class CartAdapter (
                     cartQuantity.removeAt(position)
                     cartItemPrices.removeAt(position)
                     cartIngredient.removeAt(position)
+                    cartRestaurant.removeAt(position)
 
                     Toast.makeText(context, "Elemento eliminado correctamente", Toast.LENGTH_SHORT).show()
 

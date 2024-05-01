@@ -43,32 +43,50 @@ class MenuBottomSheetFragment : BottomSheetDialogFragment() {
     }
 
     private fun retrieveMenuItems() {
-        database = FirebaseDatabase.getInstance()
-        val foodRef: DatabaseReference = database.reference.child("menu")
-        menuItems = mutableListOf()
 
-        foodRef.addListenerForSingleValueEvent(object : ValueEventListener{
+        database = FirebaseDatabase.getInstance()
+
+        val userRef: DatabaseReference = database.reference.child("user")
+
+        userRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                for (foodSnapshot in snapshot.children){
-                    val menuItem = foodSnapshot.getValue(MenuItem::class.java)
-                    menuItem?.let {
-                        menuItems.add(it)
-                    }
+                for (userSnapshot in snapshot.children) {
+                    val userUid = userSnapshot.key.toString()
+                    //obtener una referencia del database
+                    database = FirebaseDatabase.getInstance()
+                    val foodRef: DatabaseReference =
+                        database.reference.child("user").child(userUid).child("menu")
+                    menuItems = mutableListOf()
+
+                    //recuperar platillos del database
+                    foodRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            for (foodSnapshot in snapshot.children) {
+                                val menuItem = foodSnapshot.getValue(MenuItem::class.java)
+                                menuItem?.let { menuItems.add(it) }
+                            }
+                            //una vez los datos recuperados, establecerla en el adapter
+                            setAdapter()
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            TODO("Not yet implemented")
+                        }
+
+                    })
                 }
-                Log.d("ITEMS", "onDataChange: Data Recieved")
-                //una vez los datos recuperados, establecerla en el adapter
-                setAdapter()
             }
 
             override fun onCancelled(error: DatabaseError) {
-
+                TODO("Not yet implemented")
             }
 
         })
+
     }
 
     private fun setAdapter() {
-        if(menuItems.isNotEmpty()){
+        if (menuItems.isNotEmpty()) {
             val adapter = MenuAdapter(menuItems, requireContext())
             binding.menuRecyclerView.layoutManager = LinearLayoutManager(requireContext())
             binding.menuRecyclerView.adapter = adapter

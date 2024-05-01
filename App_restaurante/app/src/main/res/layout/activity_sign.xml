@@ -31,18 +31,20 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout"
+        android:id="@+id/inputLocation"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="57dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="15dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/edittexto"
         app:boxStrokeWidth="0dp"
         app:boxStrokeWidthFocused="0dp"
-        app:endIconDrawable="@drawable/flecha"
-        app:endIconTint="@color/black"
+        app:endIconDrawable="@drawable/chevron32x32"
+        app:endIconTint="@color/textColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8">
 
         <AutoCompleteTextView
@@ -50,9 +52,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fontFamily="@font/abeezee"
+            android:hint="Elegir ubicación"
             android:inputType="none"
+            android:text="Elegir ubicación"
             android:textColor="#73FFFFFF"
-            android:text="Elegir Localizacion" />
+            android:textColorHint="#73FFFFFF" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -101,7 +105,7 @@
         android:fontFamily="sans-serif-medium"
         android:text="Registrate"
         android:textColor="@color/textColor"
-        android:textSize="16sp"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView3"
         app:layout_constraintStart_toStartOf="@+id/imageView3"
         app:layout_constraintTop_toBottomOf="@+id/imageView3" />
@@ -114,15 +118,17 @@
         android:background="@drawable/edittexto"
         android:drawableLeft="@drawable/restaurantes"
         android:drawablePadding="15dp"
+        android:drawableTint="@color/textColor"
         android:elevation="10dp"
         android:ems="10"
         android:hint="Nombre del Restaurante"
         android:inputType="text"
         android:paddingLeft="15dp"
+        android:textColor="@color/white"
         android:textColorHint="#8F8F8F"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/inputLocation" />
 
     <EditText
         android:id="@+id/name"
@@ -132,11 +138,13 @@
         android:background="@drawable/edittexto"
         android:drawableLeft="@drawable/user32x32"
         android:drawablePadding="15dp"
+        android:drawableTint="@color/textColor"
         android:elevation="10dp"
         android:ems="10"
         android:hint="Nombre de Usuario"
         android:inputType="text"
         android:paddingLeft="15dp"
+        android:textColor="@color/white"
         android:textColorHint="#8F8F8F"
         app:layout_constraintEnd_toEndOf="@+id/restaurantName"
         app:layout_constraintStart_toStartOf="@+id/restaurantName"
@@ -150,11 +158,13 @@
         android:background="@drawable/edittexto"
         android:drawableLeft="@drawable/mail"
         android:drawablePadding="15dp"
+        android:drawableTint="@color/textColor"
         android:elevation="10dp"
         android:ems="10"
         android:hint="Email o teléfono"
         android:inputType="textEmailAddress"
         android:paddingLeft="15dp"
+        android:textColor="@color/white"
         android:textColorHint="#8F8F8F"
         app:layout_constraintEnd_toEndOf="@+id/name"
         app:layout_constraintStart_toStartOf="@+id/name"
@@ -168,11 +178,13 @@
         android:background="@drawable/edittexto"
         android:drawableLeft="@drawable/padlock"
         android:drawablePadding="15dp"
+        android:drawableTint="@color/textColor"
         android:elevation="10dp"
         android:ems="10"
         android:hint="Contraseña"
         android:inputType="textPassword"
         android:paddingLeft="15dp"
+        android:textColor="@color/white"
         android:textColorHint="#8F8F8F"
         app:layout_constraintEnd_toEndOf="@+id/emailOrPhone"
         app:layout_constraintStart_toStartOf="@+id/emailOrPhone"

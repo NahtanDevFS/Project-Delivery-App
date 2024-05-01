@@ -2,12 +2,14 @@ package com.apprestaurante
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.apprestaurante.adapter.PendingOrderAdapter
 import com.apprestaurante.databinding.ActivityOrdenesPendientesBinding
 import com.apprestaurante.model.OrderDetails
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -19,9 +21,14 @@ class PendingOrderActivity : AppCompatActivity(), PendingOrderAdapter.OnItemClic
     private var listOfName: MutableList<String> = mutableListOf()
     private var listOfTotalPrice: MutableList<String> = mutableListOf()
     private var listOfImageFirstFoodOrder: MutableList<String> = mutableListOf()
+    private var listOfIsAccepted: MutableList<Boolean> = mutableListOf()
     private var listOfOrderItem: ArrayList<OrderDetails> = arrayListOf()
     private lateinit var database: FirebaseDatabase
     private lateinit var databaseOrderDetails: DatabaseReference
+    private lateinit var auth: FirebaseAuth
+    private lateinit var adminReference: DatabaseReference
+    public var isOrderAccepted = false
+    private lateinit var databaseOrderRestaurant: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -34,24 +41,62 @@ class PendingOrderActivity : AppCompatActivity(), PendingOrderAdapter.OnItemClic
         //inicializacion de la referencia de la base de datos
         databaseOrderDetails = database.reference.child("OrderDetails")
 
+        auth = FirebaseAuth.getInstance()
+
+        adminReference = database.reference.child("user")
+
         getOrdersDetails()
 
         binding.backButton.setOnClickListener{
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
             finish()
         }
 
 
     }
 
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
     private fun getOrdersDetails() {
+
+        val currentUserUid = auth.currentUser?.uid
+        var restaurant = ""
+        if (currentUserUid != null) {
+            val userReference = adminReference.child(currentUserUid)
+
+            userReference.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        restaurant = snapshot.child("nameOfRestaurant").getValue().toString()
+                    }
+                }
+                override fun onCancelled(error: DatabaseError) {
+                }
+            })
+        }
+
         //recuperar los detalles de las órdenes de la base de datos de firebase
         databaseOrderDetails.addListenerForSingleValueEvent(object :ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 for(orderSnapshot in snapshot.children){
-                    val orderDetails = orderSnapshot.getValue(OrderDetails::class.java)
-                    orderDetails?.let {
-                        listOfOrderItem.add(it)
+
+                    val orderUid = orderSnapshot.key.toString()
+                    var orderRestaurant = snapshot.child(orderUid).child("foodRestaurant").child("0").getValue()
+
+                    if (orderRestaurant == restaurant){
+                        val orderDetails = orderSnapshot.getValue(OrderDetails::class.java)
+                        orderDetails?.let { listOfOrderItem.add(it) }
                     }
+
+                    //databaseOrderRestaurant = database.reference.child("OrderDetails").child(orderUid).child("foodRestaurant").child("0")
+
                 }
                 addDataToListRecyclerView()
             }
@@ -71,13 +116,14 @@ class PendingOrderActivity : AppCompatActivity(), PendingOrderAdapter.OnItemClic
             orderItem.foodImages?.filterNot { it.isEmpty() }?.forEach {
                 listOfImageFirstFoodOrder.add(it)
             }
+            orderItem.orderAccepted?.let { listOfIsAccepted.add(it) }
         }
         setAdapter()
     }
 
     private fun setAdapter() {
         binding.pendingOrderRecyclerView.layoutManager = LinearLayoutManager(this)
-        val adapter = PendingOrderAdapter(this, listOfName, listOfTotalPrice, listOfImageFirstFoodOrder, this)
+        val adapter = PendingOrderAdapter(this, listOfName, listOfTotalPrice, listOfImageFirstFoodOrder, listOfIsAccepted, this)
         binding.pendingOrderRecyclerView.adapter = adapter
     }
 
@@ -95,6 +141,7 @@ class PendingOrderActivity : AppCompatActivity(), PendingOrderAdapter.OnItemClic
             database.reference.child("OrderDetails").child(it)
         }
         clickItemOrderReference?.child("orderAccepted")?.setValue(true)
+
         updateOrderAcceptStatus(position)
     }
 
@@ -112,7 +159,7 @@ class PendingOrderActivity : AppCompatActivity(), PendingOrderAdapter.OnItemClic
         val orderDetailsItemsReference = database.reference.child("OrderDetails").child(dispatchItemPushKey)
         orderDetailsItemsReference.removeValue()
             .addOnSuccessListener {
-                Toast.makeText(this, "La orden ha sido despachada", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "La Orden fue Despachada", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener {
                 Toast.makeText(this, "Error al despachar la orden", Toast.LENGTH_SHORT).show()

@@ -1,5 +1,6 @@
 package com.apprestaurante
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
@@ -19,6 +20,8 @@ class AddItemActivity : AppCompatActivity() {
     private lateinit var foodPrice: String
     private lateinit var foodDescription: String
     private lateinit var foodIngredient: String
+    private lateinit var foodRestaurant: String
+    private lateinit var userId: String
     private var foodImageUri: Uri? = null
 
     //Firebase
@@ -43,10 +46,13 @@ class AddItemActivity : AppCompatActivity() {
             foodPrice = binding.foodPrice.text.toString().trim()
             foodDescription = binding.description.text.toString().trim()
             foodIngredient = binding.ingredient.text.toString().trim()
+            foodRestaurant = binding.restaurant.text.toString().trim()
 
-            if (!(foodName.isBlank() || foodPrice.isBlank() || foodDescription.isBlank() || foodIngredient.isBlank())){
+            if (!(foodName.isBlank() || foodPrice.isBlank() || foodDescription.isBlank() || foodIngredient.isBlank() || foodRestaurant.isBlank())){
                 uploadData()
                 Toast.makeText(this, "Platillo agregado exitosamente", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
                 finish()
 
             } else {
@@ -60,14 +66,25 @@ class AddItemActivity : AppCompatActivity() {
         }
 
         binding.backButton.setOnClickListener{
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
             finish()
         }
     }
 
-    private fun uploadData() {
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
 
+    private fun uploadData() {
+        userId = auth.currentUser?.uid?:""
         //obtener una referencia al nodo "menu" en el database
-        val menuRef = database.getReference("menu")
+        //val menuRef = database.getReference("menu")
+        val menuRef = database.getReference().child("user").child(userId).child("menu")
         //generar una llave única para el nuevo platillo
         val newItemKey = menuRef.push().key
 
@@ -82,10 +99,12 @@ class AddItemActivity : AppCompatActivity() {
                     downloadUrl ->
                     //Crear un nuevo platillo
                     val newItem = AllMenu(
+                        newItemKey,
                         foodName = foodName,
                         foodPrice = foodPrice,
                         foodDescription = foodDescription,
                         foodIngredient = foodIngredient,
+                        foodRestaurant = foodRestaurant,
                         foodImage = downloadUrl.toString(),
                     )
                     newItemKey?.let {

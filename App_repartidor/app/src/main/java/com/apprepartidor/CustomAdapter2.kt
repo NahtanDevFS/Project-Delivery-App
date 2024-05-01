@@ -18,9 +18,9 @@ class CustomAdapter2 : RecyclerView.Adapter<CustomAdapter2.ViewHolder>(){
         "Pedido Entregado",
         "Pedido Entregado")
 
-    val images = intArrayOf(R.drawable.user32x32,
-        R.drawable.user32x32,
-        R.drawable.user32x32)
+    val images = intArrayOf(R.drawable.user,
+        R.drawable.user,
+        R.drawable.user)
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder {
         val v = LayoutInflater.from(viewGroup.context).inflate(R.layout.cardview, viewGroup, false)

@@ -8,7 +8,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.apprepartidor.databinding.ActivityHistorialEntregasBinding
 import com.apprepartidor.databinding.ActivityMenuBinding
 import com.facebook.login.LoginManager
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -75,7 +74,14 @@ class menu : AppCompatActivity() {
         val mapa = findViewById<TextView>(R.id.button5)
 
         mapa.setOnClickListener{
-            val intent = Intent(this, pedidos_disponibles::class.java)
+            val intent = Intent(this, pedidos_disponible::class.java)
+            startActivity(intent)
+        }
+
+        val Entrega = findViewById<TextView>(R.id.button2)
+
+        Entrega.setOnClickListener{
+            val intent = Intent(this, pedidos_entregados::class.java)
             startActivity(intent)
         }
 

@@ -17,9 +17,9 @@ class CustomAdapter : RecyclerView.Adapter<CustomAdapter.ViewHolder>(){
         "Pedido Disponible",
         "Pedido Disponible")
 
-    val images = intArrayOf(R.drawable.user32x32,
-        R.drawable.user32x32,
-        R.drawable.user32x32)
+    val images = intArrayOf(R.drawable.user,
+        R.drawable.user,
+        R.drawable.user)
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder {
         val v = LayoutInflater.from(viewGroup.context).inflate(R.layout.cardview, viewGroup, false)
@@ -27,8 +27,8 @@ class CustomAdapter : RecyclerView.Adapter<CustomAdapter.ViewHolder>(){
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, i: Int) {
-        viewHolder.itemTitle.text = titles[i]
-        viewHolder.itemDetail.text = details[i]
+       viewHolder.itemTitle.text = titles[i]
+       viewHolder.itemDetail.text = details[i]
         viewHolder.itemImagen.setImageResource(images[i])
     }
 
@@ -38,11 +38,11 @@ class CustomAdapter : RecyclerView.Adapter<CustomAdapter.ViewHolder>(){
     inner class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
         var itemImagen : ImageView
         var itemTitle : TextView
-        var itemDetail : TextView
+       var itemDetail : TextView
 
         init {
             itemImagen = itemView.findViewById(R.id.item_imagen)
-            itemTitle = itemView.findViewById(R.id.title_item)
+           itemTitle = itemView.findViewById(R.id.title_item)
             itemDetail = itemView.findViewById(R.id.title2_item)
         }
     }

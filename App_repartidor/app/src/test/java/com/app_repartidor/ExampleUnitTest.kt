@@ -1,4 +1,4 @@
-package com.apprepartidor
+package com.app_repartidor
 
 import org.junit.Test
 

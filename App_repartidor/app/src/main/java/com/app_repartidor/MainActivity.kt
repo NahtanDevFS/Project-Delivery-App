@@ -1,4 +1,4 @@
-package com.apprepartidor
+package com.app_repartidor
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge

@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity() {
                 pendingOrders()
                 wholeTimeEarning()
             }
-        }, 700)
+        }, 1600)
 
         //completedOrders()
 

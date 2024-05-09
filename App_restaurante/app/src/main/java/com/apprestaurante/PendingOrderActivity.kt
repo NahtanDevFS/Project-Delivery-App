@@ -116,6 +116,7 @@ class PendingOrderActivity : AppCompatActivity(), PendingOrderAdapter.OnItemClic
             orderItem.foodImages?.filterNot { it.isEmpty() }?.forEach {
                 listOfImageFirstFoodOrder.add(it)
             }
+
             orderItem.orderAccepted?.let { listOfIsAccepted.add(it) }
         }
         setAdapter()

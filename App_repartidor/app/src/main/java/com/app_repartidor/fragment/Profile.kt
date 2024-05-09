@@ -1,25 +1,23 @@
-package com.appcliente.Fragment
+package com.app_repartidor.fragment
 
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.appcliente.LoginScreen
-import com.appcliente.R
-import com.appcliente.SingScreen
-import com.appcliente.databinding.FragmentProfileBinding
-import com.appcliente.model.UserModel
+import androidx.fragment.app.Fragment
+import com.app_repartidor.Login
+import com.app_repartidor.databinding.FragmentProfileBinding
+import com.app_repartidor.model.UserModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class ProfileFragment : Fragment() {
+class Profile : Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
 
@@ -35,11 +33,10 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        // Inflate the layout for this fragment
         binding = FragmentProfileBinding.inflate(inflater, container, false)
 
         binding.apply {
-
             nameProfile.isEnabled = false
             emailProfile.isEnabled = false
             addressProfile.isEnabled = false
@@ -88,11 +85,12 @@ class ProfileFragment : Fragment() {
 
         binding.logOutButton.setOnClickListener {
             auth.signOut()
-            val intent = Intent(requireContext(), LoginScreen::class.java)
+            val intent = Intent(requireContext(), Login::class.java)
             startActivity(intent)
         }
 
         setUserData()
+
 
         return binding.root
     }
@@ -133,7 +131,7 @@ class ProfileFragment : Fragment() {
         if(userId != null){
             val userReference = database.getReference("user").child(userId)
 
-            userReference.addListenerForSingleValueEvent(object :ValueEventListener{
+            userReference.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()){
                         val userProfile = snapshot.getValue(UserModel::class.java)

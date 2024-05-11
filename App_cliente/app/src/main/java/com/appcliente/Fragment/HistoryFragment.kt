@@ -56,7 +56,7 @@ class HistoryFragment : Fragment() {
         }
 
         binding.receivedButton.setOnClickListener {
-            updateOrderStatus()
+            //updateOrderStatus()
         }
 
         return binding.root
@@ -126,7 +126,7 @@ class HistoryFragment : Fragment() {
                 val isOrderIsAccepted = listOfOrderItem[0].orderAccepted
                 if(isOrderIsAccepted){
                     orderStatus.background.setTint(Color.GREEN)
-                    receivedButton.visibility = View.VISIBLE
+                    //receivedButton.visibility = View.VISIBLE
                 }
 
                 //listOfOrderItem.reverse()

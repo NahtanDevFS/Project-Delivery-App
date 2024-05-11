@@ -59,8 +59,8 @@ class MainActivity : AppCompatActivity() {
         createChannel()
 
         binding.notificationButton.setOnClickListener {
-            val bottomSheetDialog = NotificationBottomFragment()
-            bottomSheetDialog.show(supportFragmentManager, "Test")
+//            val bottomSheetDialog = NotificationBottomFragment()
+//            bottomSheetDialog.show(supportFragmentManager, "Test")
         }
 
         if (isNotificationServiceEnabled()) {

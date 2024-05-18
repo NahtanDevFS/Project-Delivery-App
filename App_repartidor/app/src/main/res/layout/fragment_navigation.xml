@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/background_color"
+    tools:context=".fragment.Navigation">
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="com.google.android.gms.maps.SupportMapFragment" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="16dp"
+        android:layout_gravity="top"
+        app:cardCornerRadius="30dp"
+        android:layout_marginTop="16dp"
+        app:cardBackgroundColor="@color/text_color_hint">
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/searchLocation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"/>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/routeButton"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom|center"
+        android:textSize="18sp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/yellow_button"
+        android:text="Crear ruta"
+        android:textColor="@color/white" />
+
+</FrameLayout>

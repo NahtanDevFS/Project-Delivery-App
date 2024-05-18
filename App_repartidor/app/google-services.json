@@ -1,10 +1,40 @@
 {
   "project_info": {
     "project_number": "207123066809",
+    "firebase_url": "https://day-express-2c811-default-rtdb.firebaseio.com",
     "project_id": "day-express-2c811",
     "storage_bucket": "day-express-2c811.appspot.com"
   },
   "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:207123066809:android:ed97ae8fa9ea655aab1068",
+        "android_client_info": {
+          "package_name": "com.app_repartidor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "207123066809-lf8emgknefeb1b8ncanccrrs7kdddo43.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQYg2whkGT7GhRixlgWZd9piZVjKRJ0Vc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "207123066809-lf8emgknefeb1b8ncanccrrs7kdddo43.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
     {
       "client_info": {
         "mobilesdk_app_id": "1:207123066809:android:02920666fd902eb0ab1068",
@@ -44,12 +74,20 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:207123066809:android:315bd88924aecffdab1068",
+        "mobilesdk_app_id": "1:207123066809:android:4d82584fdb968fb5ab1068",
         "android_client_info": {
-          "package_name": "com.apprepartidor"
+          "package_name": "com.apprestaurante"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "207123066809-fnecrd0ub1htrtsf0h599f76um4l77e4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.apprestaurante",
+            "certificate_hash": "826b0024f2ae14c1de30a81296b9072ca17922ba"
+          }
+        },
         {
           "client_id": "207123066809-lf8emgknefeb1b8ncanccrrs7kdddo43.apps.googleusercontent.com",
           "client_type": 3

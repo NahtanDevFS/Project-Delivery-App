@@ -194,7 +194,7 @@
                 android:background="@android:color/transparent"
                 android:ems="10"
                 android:fontFamily="sans-serif-medium"
-                android:inputType="textVisiblePassword"
+                android:inputType="textPassword"
                 android:textColor="@color/white"
                 android:textColorHint="#73FFFFFF" />
         </LinearLayout>

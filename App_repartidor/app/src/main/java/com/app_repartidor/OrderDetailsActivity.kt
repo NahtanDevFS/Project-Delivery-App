@@ -4,6 +4,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -13,7 +14,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.app_repartidor.adapter.OrderDetailsAdapter
 import com.app_repartidor.databinding.ActivityOrderDetailsBinding
 import com.app_repartidor.model.OrderDetails
+import com.app_repartidor.model.UserModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class OrderDetailsActivity : AppCompatActivity() {
 
@@ -31,6 +37,7 @@ class OrderDetailsActivity : AppCompatActivity() {
     private var foodQuantity: ArrayList<Int> = arrayListOf()
     private var foodPrices: ArrayList<String> = arrayListOf()
     private lateinit var database: FirebaseDatabase
+    private val auth = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +54,7 @@ class OrderDetailsActivity : AppCompatActivity() {
 
         binding.returnButton.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
+            intent
             startActivity(intent)
             finish()
         }
@@ -69,9 +77,48 @@ class OrderDetailsActivity : AppCompatActivity() {
 
     }
 
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun addPayment() {
+        val userId = auth.currentUser?.uid
+        var totalPayment = 0
+
+        if(userId != null) {
+            val userReference = database.getReference("user").child(userId)
+
+            userReference.addListenerForSingleValueEvent(object : ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()){
+                        val pay = snapshot.child("payment").getValue()
+                        if(pay != null){
+                            val strPay = pay.toString()
+                            totalPayment = strPay.toInt() + 8
+                        } else{
+                            totalPayment = 8
+                        }
+                        database.reference.child("user").child(userId).child("payment").setValue(totalPayment.toString())
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+
+            })
+        }
+
+    }
+
     private fun updateOrderStatus() {
         val completeOrderReference = database.reference.child("CompleteOrder").child(itemPushKey!!)
         completeOrderReference.child("paymentReceived").setValue(true)
+        addPayment()
         Toast.makeText(this, "Pago exitoso", Toast.LENGTH_SHORT).show()
     }
 

@@ -90,7 +90,6 @@ class ProfileFragment : Fragment() {
             auth.signOut()
             val intent = Intent(requireContext(), LoginScreen::class.java)
             startActivity(intent)
-
         }
 
         setUserData()

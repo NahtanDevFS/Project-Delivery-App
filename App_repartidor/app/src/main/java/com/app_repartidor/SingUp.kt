@@ -81,7 +81,6 @@ class SingUp : AppCompatActivity() {
                     Toast.makeText(this, "La contraseña debe ser de al menos 6 caracteres", Toast.LENGTH_SHORT).show()
                 }
             }
-
         }
     }
 

@@ -120,7 +120,7 @@
         android:id="@+id/googleButton"
         android:layout_width="200dp"
         android:layout_height="57dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/graybutton"
         android:drawableLeft="@drawable/google32x32"
         android:drawablePadding="0dp"
@@ -154,6 +154,17 @@
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/googleButton" />
+
+    <TextView
+        android:id="@+id/btnForgotPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="¿Olvidaste tu contraseña?"
+        android:textColor="@color/textColor"
+        app:layout_constraintEnd_toEndOf="@+id/btnNoCuenta"
+        app:layout_constraintStart_toStartOf="@+id/btnNoCuenta"
+        app:layout_constraintTop_toBottomOf="@+id/btnNoCuenta" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

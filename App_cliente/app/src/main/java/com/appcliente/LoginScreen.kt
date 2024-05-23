@@ -86,6 +86,11 @@ class LoginScreen : AppCompatActivity() {
             val signInIntent = googleSignInClient.signInIntent
             launcher.launch(signInIntent)
         }
+
+        binding.btnForgotPassword.setOnClickListener {
+            val intent = Intent(this, ResetPassword::class.java)
+            startActivity(intent)
+        }
         
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

@@ -2,9 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
 
     <application
@@ -17,8 +16,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCliente"
         tools:targetApi="31">
-        <receiver android:name=".alarms.AlarmNotification"
-            android:enabled="true"/>
+        <activity
+            android:name=".ResetPassword"
+            android:exported="false" />
+
+        <receiver
+            android:name=".alarms.AlarmNotification"
+            android:enabled="true" />
+
         <activity
             android:name=".recentOrderItems"
             android:exported="false" />

@@ -99,6 +99,7 @@
         android:layout_marginTop="16dp"
         android:text="O"
         android:textColor="@color/textColor"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/passwordLogin"
         app:layout_constraintHorizontal_bias="0.473"
         app:layout_constraintStart_toStartOf="@+id/passwordLogin"
@@ -110,18 +111,20 @@
         android:layout_height="wrap_content"
         android:text="Continua con"
         android:textColor="@color/textColor"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/textView6"
         app:layout_constraintStart_toStartOf="@+id/textView6"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/googleButton"
-        android:layout_width="152dp"
+        android:layout_width="200dp"
         android:layout_height="57dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/graybutton"
         android:drawableLeft="@drawable/google32x32"
         android:drawablePadding="0dp"
+        android:fontFamily="sans-serif-medium"
         android:paddingLeft="15dp"
         android:shadowColor="#F44336"
         android:text="Google"
@@ -130,42 +133,38 @@
         android:textColorHighlight="#F44336"
         android:textColorHint="#F44336"
         android:textColorLink="#F44336"
-        app:layout_constraintEnd_toStartOf="@+id/facebookButton"
-        app:layout_constraintHorizontal_bias="0.5"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView7"
         app:rippleColor="#F44336"
         app:strokeColor="#100908" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/facebookButton"
-        android:layout_width="152dp"
-        android:layout_height="57dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/graybutton"
-        android:drawableLeft="@drawable/facebook32x32"
-        android:paddingLeft="15dp"
-        android:text="Facebook"
-        android:textAlignment="center"
-        android:textColor="#DDD8D8"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/googleButton"
-        app:layout_constraintTop_toBottomOf="@+id/textView7" />
-
-    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnlogin"
-        android:layout_width="152dp"
+        android:layout_width="200dp"
         android:layout_height="57dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/yellowbutton"
+        android:fontFamily="sans-serif-medium"
         android:text="Iniciar Sesión"
         android:textColor="@color/white"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/googleButton" />
+
+    <TextView
+        android:id="@+id/btnForgotPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="¿Olvidaste tu contraseña?"
+        android:textColor="@color/textColor"
+        app:layout_constraintEnd_toEndOf="@+id/btnNoCuenta"
+        app:layout_constraintStart_toStartOf="@+id/btnNoCuenta"
+        app:layout_constraintTop_toBottomOf="@+id/btnNoCuenta" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

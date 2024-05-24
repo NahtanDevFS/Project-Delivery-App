@@ -10,7 +10,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.apprestaurante.databinding.ActivityAddMenuBinding
 import com.apprestaurante.model.AllMenu
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 
 class AddItemActivity : AppCompatActivity() {
@@ -27,6 +31,7 @@ class AddItemActivity : AppCompatActivity() {
     //Firebase
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
+    private lateinit var adminReference: DatabaseReference
 
     private val binding: ActivityAddMenuBinding by lazy{
         ActivityAddMenuBinding.inflate(layoutInflater)
@@ -39,6 +44,10 @@ class AddItemActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         //Inicializar la instancia de la database de firebase
         database = FirebaseDatabase.getInstance()
+        //Referencia a users en firebase database
+        adminReference = database.reference.child("user")
+
+        retrieveRestaurant()
 
         binding.addItemButton.setOnClickListener {
             // Obtener datos de los campos
@@ -69,6 +78,31 @@ class AddItemActivity : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
+        }
+    }
+
+    private fun retrieveRestaurant() {
+        val currentUserUid = auth.currentUser?.uid
+        if (currentUserUid != null) {
+            val userReference = adminReference.child(currentUserUid)
+
+            userReference.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+
+                        var restaurant = snapshot.child("nameOfRestaurant").getValue()
+
+                        if(restaurant != null){
+                            binding.restaurant.setText(restaurant.toString())
+                        }
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+
+            })
         }
     }
 

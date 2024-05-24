@@ -184,6 +184,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 if (numOrders != 0){
+                    Log.d("TAG", "NOTIFICACION")
                     createSimpleNotification()
                 }
             }
@@ -219,7 +220,7 @@ class MainActivity : AppCompatActivity() {
 
         val intent = Intent(this, PendingOrderActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            updateDatabaseReference()
+            //updateDatabaseReference()
         }
 
         val flag = if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) PendingIntent.FLAG_IMMUTABLE else 0

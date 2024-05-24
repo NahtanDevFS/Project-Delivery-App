@@ -10,7 +10,6 @@ import androidx.core.view.WindowInsetsCompat
 import com.app_repartidor.databinding.ActivityResetPasswordBinding
 import com.google.firebase.auth.FirebaseAuth
 
-@Suppress("DEPRECATION")
 class ResetPassword : AppCompatActivity() {
 
     private val binding: ActivityResetPasswordBinding by lazy {
